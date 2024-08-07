@@ -1,6 +1,6 @@
 /**
 =========================================================
-* Material Dashboard 2 React - v2.2.0
+* WarehouseWorx React - v2.2.0
 =========================================================
 
 * Product Page: https://www.creative-tim.com/product/material-dashboard-react
@@ -16,12 +16,12 @@ Coded by www.creative-tim.com
 // @mui material components
 import Fade from "@mui/material/Fade";
 
-// Material Dashboard 2 React base styles
+// WarehouseWorx React base styles
 import colors from "assets/theme/base/colors";
 import typography from "assets/theme/base/typography";
 import borders from "assets/theme/base/borders";
 
-// Material Dashboard 2 React helper functions
+// WarehouseWorx React helper functions
 import pxToRem from "assets/theme/functions/pxToRem";
 
 const { black, light } = colors;

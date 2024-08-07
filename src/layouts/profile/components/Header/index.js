@@ -1,6 +1,6 @@
 /**
 =========================================================
-* Material Dashboard 2 React - v2.2.0
+* WarehouseWorx React - v2.2.0
 =========================================================
 
 * Product Page: https://www.creative-tim.com/product/material-dashboard-react
@@ -26,12 +26,12 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Icon from "@mui/material/Icon";
 
-// Material Dashboard 2 React components
+// WarehouseWorx React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDAvatar from "components/MDAvatar";
 
-// Material Dashboard 2 React base styles
+// WarehouseWorx React base styles
 import breakpoints from "assets/theme/base/breakpoints";
 
 // Images

@@ -1,6 +1,6 @@
 /**
 =========================================================
-* Material Dashboard 2 React - v2.2.0
+* WarehouseWorx React - v2.2.0
 =========================================================
 
 * Product Page: https://www.creative-tim.com/product/material-dashboard-react
@@ -16,10 +16,10 @@ Coded by www.creative-tim.com
 // @mui material components
 import Grid from "@mui/material/Grid";
 
-// Material Dashboard 2 React components
+// WarehouseWorx React components
 import MDBox from "components/MDBox";
 
-// Material Dashboard 2 React examples
+// WarehouseWorx React examples
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
@@ -81,7 +81,7 @@ function Billing() {
           </Grid>
         </MDBox>
       </MDBox>
-      <Footer />
+      {/* <Footer /> */}
     </DashboardLayout>
   );
 }

@@ -1,6 +1,6 @@
 /**
 =========================================================
-* Material Dashboard 2 React - v2.2.0
+* WarehouseWorx React - v2.2.0
 =========================================================
 
 * Product Page: https://www.creative-tim.com/product/material-dashboard-react
@@ -13,10 +13,10 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
-// Material Dashboard 2 React base styles
+// WarehouseWorx React base styles
 import colors from "assets/theme/base/colors";
 
-// Material Dashboard 2 React helper functions
+// WarehouseWorx React helper functions
 import rgba from "assets/theme/functions/rgba";
 
 const { info, white, gradients } = colors;

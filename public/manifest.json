@@ -1,9 +1,9 @@
 {
   "short_name": "Material Dashboard",
-  "name": "Material Dashboard 2 React",
+  "name": "WarehouseWorx React",
   "icons": [
     {
-      "src": "favicon.png",
+      "src": "logo-ct.png",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/png"
     }

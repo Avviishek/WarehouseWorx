@@ -1,6 +1,6 @@
 /**
 =========================================================
-* Material Dashboard 2 React - v2.1.0
+* WarehouseWorx React - v2.1.0
 =========================================================
 
 * Product Page: https://www.creative-tim.com/product/nextjs-material-dashboard-pro

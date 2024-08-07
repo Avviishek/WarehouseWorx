@@ -1,6 +1,6 @@
 /**
 =========================================================
-* Material Dashboard 2 React - v2.2.0
+* WarehouseWorx React - v2.2.0
 =========================================================
 
 * Product Page: https://www.creative-tim.com/product/material-dashboard-react
@@ -19,10 +19,10 @@ import PropTypes from "prop-types";
 // @mui material components
 import Grid from "@mui/material/Grid";
 
-// Material Dashboard 2 React components
+// WarehouseWorx React components
 import MDBox from "components/MDBox";
 
-// Material Dashboard 2 React example components
+// WarehouseWorx React example components
 import DefaultNavbar from "examples/Navbars/DefaultNavbar";
 import PageLayout from "examples/LayoutContainers/PageLayout";
 
@@ -32,15 +32,15 @@ import Footer from "layouts/authentication/components/Footer";
 function BasicLayout({ image, children }) {
   return (
     <PageLayout>
-      <DefaultNavbar
+      {/* <DefaultNavbar
         action={{
           type: "external",
           route: "https://creative-tim.com/product/material-dashboard-react",
           label: "free download",
           color: "dark",
         }}
-      />
-      <MDBox
+      /> */}
+      {/* <MDBox
         position="absolute"
         width="100%"
         minHeight="100vh"
@@ -55,15 +55,15 @@ function BasicLayout({ image, children }) {
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
         }}
-      />
-      <MDBox px={1} width="100%" height="100vh" mx="auto">
+      /> */}
+      {/* <MDBox px={1} width="100%" height="100vh" mx="auto">
         <Grid container spacing={1} justifyContent="center" alignItems="center" height="100%">
           <Grid item xs={11} sm={9} md={5} lg={4} xl={3}>
             {children}
           </Grid>
         </Grid>
       </MDBox>
-      <Footer light />
+      <Footer light /> */}
     </PageLayout>
   );
 }

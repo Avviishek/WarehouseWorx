@@ -1,6 +1,6 @@
 /**
 =========================================================
-* Material Dashboard 2  React - v2.2.0
+* WarehouseWorx  React - v2.2.0
 =========================================================
 
 * Product Page: https://www.creative-tim.com/product/material-dashboard-react
@@ -34,14 +34,14 @@ import {
 import Card from "@mui/material/Card";
 import Icon from "@mui/material/Icon";
 
-// Material Dashboard 2 React components
+// WarehouseWorx React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 
 // HorizontalBarChart configurations
 import configs from "examples/Charts/BarCharts/HorizontalBarChart/configs";
 
-// Material Dashboard 2 React base styles
+// WarehouseWorx React base styles
 import colors from "assets/theme/base/colors";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
