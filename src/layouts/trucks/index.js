@@ -24,17 +24,52 @@ import MDTypography from "components/MDTypography";
 // WarehouseWorx React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
-import Footer from "examples/Footer";
 import DataTable from "examples/Tables/DataTable";
 
 // Data
-import authorsTableData from "layouts/tables/data/authorsTableData";
-import projectsTableData from "layouts/tables/data/projectsTableData";
+import { useState, useEffect } from "react";
 
 function Trucks() {
-  const { columns, rows } = authorsTableData();
-  const { columns: pColumns, rows: pRows } = projectsTableData();
+  const [columns, setColumns] = useState([]);
+  const [rows, setRows] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
+  useEffect(() => {
+    // Fetch orders data from the API
+    fetch("https://walmartworx-backend.onrender.com/trucks")
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network responses was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        // Define your columns here
+        const columnsData = [
+          { Header: "Registration Number", accessor: "regitration_no", align: "left" },
+          { Header: "Volumn", accessor: "volumn", align: "center" },
+          { Header: "Status", accessor: "status", align: "center" },
+        ];
+
+        const rowsData = data.slice(1).map((trucks) => ({
+          regitration_no: trucks["COL 1"],
+          volumn: trucks["COL 2"],
+          status: trucks["COL 3"] === "1" ? "Available" : "Not Available",
+        }));
+
+        setColumns(columnsData);
+        setRows(rowsData);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setError(error);
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error.message}</div>;
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -53,7 +88,7 @@ function Trucks() {
                 coloredShadow="info"
               >
                 <MDTypography variant="h6" color="white">
-                  Authors Table
+                  Trucks Table
                 </MDTypography>
               </MDBox>
               <MDBox pt={3}>
@@ -61,34 +96,7 @@ function Trucks() {
                   table={{ columns, rows }}
                   isSorted={false}
                   entriesPerPage={false}
-                  showTotalEntries={false}
-                  noEndBorder
-                />
-              </MDBox>
-            </Card>
-          </Grid>
-          <Grid item xs={12}>
-            <Card>
-              <MDBox
-                mx={2}
-                mt={-3}
-                py={3}
-                px={2}
-                variant="gradient"
-                bgColor="info"
-                borderRadius="lg"
-                coloredShadow="info"
-              >
-                <MDTypography variant="h6" color="white">
-                  Projects Table
-                </MDTypography>
-              </MDBox>
-              <MDBox pt={3}>
-                <DataTable
-                  table={{ columns: pColumns, rows: pRows }}
-                  isSorted={false}
-                  entriesPerPage={false}
-                  showTotalEntries={false}
+                  showTotalEntries={true}
                   noEndBorder
                 />
               </MDBox>
