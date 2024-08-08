@@ -13,6 +13,7 @@ const SignOut = ({ onSignOut }) => {
   const handleSignOut = () => {
     // onSignOut(); // Call the provided onSignOut function
     navigate("/"); // Redirect to the login page
+    window.location.reload();
   };
 
   return (
