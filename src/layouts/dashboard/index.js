@@ -53,11 +53,11 @@ function Dashboard() {
                 color="dark"
                 icon={<AssignmentIcon />}
                 title="Orders"
-                count={281}
+                count={532}
                 percentage={{
                   color: "success",
-                  amount: "+55%",
-                  label: "than lask week",
+                  amount: "+73",
+                  label: "today",
                 }}
               />
             </MDBox>
@@ -68,10 +68,10 @@ function Dashboard() {
                 // icon="LocalShippingIcon"
                 icon={<LocalShippingIcon />}
                 title="Available trucks"
-                count="2,300"
+                count="47"
                 percentage={{
                   color: "success",
-                  amount: "+3%",
+                  amount: "+4",
                   label: "than last month",
                 }}
               />
@@ -83,11 +83,11 @@ function Dashboard() {
                 color="success"
                 icon={<PeopleIcon />}
                 title="Labours Available"
-                count="34k"
+                count="38"
                 percentage={{
-                  color: "success",
-                  amount: "+1%",
-                  label: "than yesterday",
+                  color: "danger",
+                  amount: "12",
+                  label: "absent today",
                 }}
               />
             </MDBox>
@@ -98,7 +98,7 @@ function Dashboard() {
                 color="primary"
                 icon={<WarehouseIcon />}
                 title="Warehouse Space Available "
-                count="872 m³"
+                count="1240 m²"
                 percentage={{
                   color: "success",
                   amount: "",
