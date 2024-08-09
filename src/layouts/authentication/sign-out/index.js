@@ -5,8 +5,17 @@ import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { alpha } from "@mui/material/styles";
+import { useNavigate } from "react-router-dom";
 
 const SignOut = ({ onSignOut }) => {
+  const navigate = useNavigate();
+
+  const handleSignOut = () => {
+    // onSignOut(); // Call the provided onSignOut function
+    navigate("/"); // Redirect to the login page
+    window.location.reload();
+  };
+
   return (
     <Box
       display="flex"
@@ -24,10 +33,10 @@ const SignOut = ({ onSignOut }) => {
           backgroundColor: alpha("#FF0000", 0.8), // Adjust the opacity for the fade effect
           color: "white",
           "&:hover": {
-            backgroundColor: alpha("#FF0000", 1), // Full red on hover
+            backgroundColor: alpha("#FF0000", 0.8), // Full red on hover
           },
         }}
-        onClick={onSignOut}
+        onClick={handleSignOut}
       >
         Sign Out
       </Button>

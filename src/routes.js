@@ -49,6 +49,7 @@ import Profile from "layouts/profile";
 import SignIn from "layouts/authentication/sign-in";
 import SignUp from "layouts/authentication/sign-up";
 import SignOut from "layouts/authentication/sign-out";
+import Login from "layouts/authentication/components/login";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
@@ -149,6 +150,7 @@ const routes = [
     route: "/authentication/sign-out",
     component: <SignOut />,
   },
+
   // {
   //   type: "collapse",
   //   name: "Sign Up",
