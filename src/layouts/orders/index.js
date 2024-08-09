@@ -45,9 +45,9 @@ function Orders() {
         // Define your columns here
         const columnsData = [
           { Header: "Order ID", accessor: "Order_Id", align: "left" },
+          { Header: "Date", accessor: "Date", align: "center" },
           { Header: "Category", accessor: "Category", align: "center" },
-          { Header: "Quantity", accessor: "Quantity", align: "center" },
-          { Header: "Volume", accessor: "Volume", align: "center" },
+          { Header: "Volume(m\u00B3)", accessor: "Volume", align: "center" },
           { Header: "Address", accessor: "Address", align: "center" },
           { Header: "PIN", accessor: "PIN", align: "center" },
         ];
@@ -56,7 +56,7 @@ function Orders() {
           Order_Id: order["COL 1"],
           Address: order["COL 2"],
           PIN: order["COL 3"],
-          Quantity: order["COL 4"],
+          Date: order["COL 7"],
           Category: order["COL 5"],
           Volume: order["COL 6"],
         }));
