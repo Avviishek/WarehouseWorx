@@ -31,10 +31,53 @@ import DataTable from "examples/Tables/DataTable";
 import authorsTableData from "layouts/tables/data/authorsTableData";
 import projectsTableData from "layouts/tables/data/projectsTableData";
 
+import { useState, useEffect } from "react";
 function Assign() {
-  const { columns, rows } = authorsTableData();
-  const { columns: pColumns, rows: pRows } = projectsTableData();
+  const [columns, setColumns] = useState([]);
+  const [rows, setRows] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  useEffect(() => {
+    // Fetch orders data from the API
+    fetch("http://localhost:3001/orders")
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network responses was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        // Define your columns here
+        const columnsData = [
+          { Header: "Order ID", accessor: "Order_Id", align: "left" },
+          { Header: "Date", accessor: "Date", align: "center" },
+          { Header: "Category", accessor: "Category", align: "center" },
+          { Header: "Volume(m\u00B3)", accessor: "Volume", align: "center" },
+          { Header: "Address", accessor: "Address", align: "center" },
+          { Header: "PIN", accessor: "PIN", align: "center" },
+        ];
 
+        const rowsData = data.slice(1).map((order) => ({
+          Order_Id: order["COL 1"],
+          Address: order["COL 2"],
+          PIN: order["COL 3"],
+          Date: order["COL 7"],
+          Category: order["COL 5"],
+          Volume: order["COL 6"],
+        }));
+
+        setColumns(columnsData);
+        setRows(rowsData);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setError(error);
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error.message}</div>;
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -53,42 +96,15 @@ function Assign() {
                 coloredShadow="info"
               >
                 <MDTypography variant="h6" color="white">
-                  Authors Table
+                  Orders Table
                 </MDTypography>
               </MDBox>
               <MDBox pt={3}>
                 <DataTable
                   table={{ columns, rows }}
                   isSorted={false}
-                  entriesPerPage={false}
-                  showTotalEntries={false}
-                  noEndBorder
-                />
-              </MDBox>
-            </Card>
-          </Grid>
-          <Grid item xs={12}>
-            <Card>
-              <MDBox
-                mx={2}
-                mt={-3}
-                py={3}
-                px={2}
-                variant="gradient"
-                bgColor="info"
-                borderRadius="lg"
-                coloredShadow="info"
-              >
-                <MDTypography variant="h6" color="white">
-                  Projects Table
-                </MDTypography>
-              </MDBox>
-              <MDBox pt={3}>
-                <DataTable
-                  table={{ columns: pColumns, rows: pRows }}
-                  isSorted={false}
-                  entriesPerPage={false}
-                  showTotalEntries={false}
+                  entriesPerPage={true}
+                  showTotalEntries={true}
                   noEndBorder
                 />
               </MDBox>
@@ -96,7 +112,6 @@ function Assign() {
           </Grid>
         </Grid>
       </MDBox>
-      {/* <Footer /> */}
     </DashboardLayout>
   );
 }
