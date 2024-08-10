@@ -90,7 +90,7 @@ const routes = [
 
     icon: <AssignmentTurnedInIcon fontSize="small" />,
     route: "/assign",
-    component: <Trucks />,
+    component: <Assign />,
   },
 
   {
