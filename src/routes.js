@@ -87,7 +87,6 @@ const routes = [
     type: "collapse",
     name: "Assign",
     key: "assign",
-
     icon: <AssignmentTurnedInIcon fontSize="small" />,
     route: "/assign",
     component: <Assign />,
