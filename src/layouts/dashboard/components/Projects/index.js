@@ -1,19 +1,4 @@
-/**
-=========================================================
-* WarehouseWorx React - v2.2.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 // @mui material components
 import Card from "@mui/material/Card";
@@ -29,11 +14,59 @@ import MDTypography from "components/MDTypography";
 import DataTable from "examples/Tables/DataTable";
 
 // Data
-import data from "layouts/dashboard/components/Projects/data";
 
 function Projects() {
-  const { columns, rows } = data();
-  const [menu, setMenu] = useState(null);
+  const [columns, setColumns] = useState([]);
+  const [rows, setRows] = useState([]);
+  const [menu, setMenu] = useState(null); // Initialized as null for the menu anchor
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const fetchData = () => {
+    setLoading(true);
+
+    const url = "https://walmartworx-backend.onrender.com/recentorders";
+
+    fetch(url)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        const columnsData = [
+          { Header: "Order ID", accessor: "Order_Id", align: "left" },
+          { Header: "Date", accessor: "Date", align: "center" },
+          { Header: "Category", accessor: "Category", align: "center" },
+          { Header: "Volume(m\u00B3)", accessor: "Volume", align: "center" },
+          { Header: "Address", accessor: "Address", align: "center" },
+          { Header: "PIN", accessor: "PIN", align: "center" },
+        ];
+
+        // Assuming the first row is headers, skipping it by using slice(1)
+        const rowsData = data.slice(1).map((order) => ({
+          Order_Id: order["COL 1"],
+          Address: order["COL 2"],
+          PIN: order["COL 3"],
+          Date: order["COL 7"],
+          Category: order["COL 5"],
+          Volume: order["COL 6"],
+        }));
+
+        setColumns(columnsData);
+        setRows(rowsData);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setError(error);
+        setLoading(false);
+      });
+  };
+
+  useEffect(() => {
+    fetchData(); // Fetch data when the component mounts
+  }, []);
 
   const openMenu = ({ currentTarget }) => setMenu(currentTarget);
   const closeMenu = () => setMenu(null);
@@ -64,38 +97,40 @@ function Projects() {
       <MDBox display="flex" justifyContent="space-between" alignItems="center" p={3}>
         <MDBox>
           <MDTypography variant="h6" gutterBottom>
-            Orders
+            Recent Orders
           </MDTypography>
-          <MDBox display="flex" alignItems="center" lineHeight={0}>
-            {/* <Icon
-              sx={{
-                fontWeight: "bold",
-                color: ({ palette: { info } }) => info.main,
-                mt: -0.5,
-              }}
-            >
-              done
-            </Icon> */}
-            <MDTypography variant="button" fontWeight="regular" color="text">
-              <strong>few</strong> Latest orders
-            </MDTypography>
-          </MDBox>
-        </MDBox>
-        <MDBox color="text" px={2}>
-          <Icon sx={{ cursor: "pointer", fontWeight: "bold" }} fontSize="small" onClick={openMenu}>
-            more_vert
-          </Icon>
+          <MDBox display="flex" alignItems="center" lineHeight={0}></MDBox>
         </MDBox>
         {renderMenu}
       </MDBox>
-      <MDBox>
-        <DataTable
-          table={{ columns, rows }}
-          showTotalEntries={false}
-          isSorted={false}
-          noEndBorder
-          entriesPerPage={false}
-        />
+      <MDBox pt={3}>
+        {loading ? (
+          <MDBox p={3}>
+            <MDTypography variant="h6" align="center">
+              Loading...
+            </MDTypography>
+          </MDBox>
+        ) : error ? (
+          <MDBox p={3}>
+            <MDTypography variant="h6" align="center" color="error">
+              {`Error: ${error.message}`}
+            </MDTypography>
+          </MDBox>
+        ) : rows.length > 0 ? (
+          <DataTable
+            table={{ columns, rows }}
+            isSorted={false}
+            entriesPerPage={false}
+            showTotalEntries={false}
+            noEndBorder
+          />
+        ) : (
+          <MDBox p={3}>
+            <MDTypography variant="h6" align="center">
+              No recent orders.
+            </MDTypography>
+          </MDBox>
+        )}
       </MDBox>
     </Card>
   );
