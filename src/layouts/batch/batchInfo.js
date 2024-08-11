@@ -19,11 +19,9 @@ import Card from "@mui/material/Card";
 // WarehouseWorx React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
+import BatchCard from "./batchCard";
 
-// Billing page components
-import Bill from "layouts/billing/components/Bill";
-
-function BillingInformation() {
+function Batchformation() {
   return (
     <Card id="delete-account">
       <MDBox pt={3} px={2}>
@@ -34,7 +32,7 @@ function BillingInformation() {
       <MDBox pt={1} pb={2} px={2}>
         <MDBox component="ul" display="flex" flexDirection="column" p={0} m={0}>
           {/* batchId, assignedTo, vehicleRegNo, mobileNo, toatalOrders, status  */}
-          <Bill
+          <BatchCard
             batchId="oliver liam"
             assignedTo="viking burrito"
             vehicleRegNo="oliver@burrito.com"
@@ -42,7 +40,7 @@ function BillingInformation() {
             toatalOrders="343"
             status="dispatched"
           />
-          <Bill
+          <BatchCard
             batchId="oliver liam"
             assignedTo="viking burrito"
             vehicleRegNo="oliver@burrito.com"
@@ -50,7 +48,7 @@ function BillingInformation() {
             toatalOrders="343"
             status="dispatched"
           />
-          <Bill
+          <BatchCard
             batchId="oliver liam"
             assignedTo="viking burrito"
             vehicleRegNo="oliver@burrito.com"
@@ -65,4 +63,4 @@ function BillingInformation() {
   );
 }
 
-export default BillingInformation;
+export default Batchformation;

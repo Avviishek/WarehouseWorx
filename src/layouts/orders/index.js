@@ -67,6 +67,9 @@ function Orders() {
       } else if (startDate && endDate) {
         url = `https://walmartworx-backend.onrender.com/orderdaterange?startDate=${startDate}&endDate=${endDate}`;
       }
+      if (city && startDate && endDate) {
+        url = `https://walmartworx-backend.onrender.com/orderdateaddress?startDate=${startDate}&endDate=${endDate}&address=${city}`;
+      }
 
       fetch(url)
         .then((response) => {

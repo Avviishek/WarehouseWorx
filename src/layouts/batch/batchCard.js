@@ -27,7 +27,15 @@ import MDButton from "components/MDButton";
 // WarehouseWorx React context
 import { useMaterialUIController } from "context";
 
-function Bill({ batchId, assignedTo, vehicleRegNo, mobileNo, toatalOrders, status, noGutter }) {
+function BatchCard({
+  batchId,
+  assignedTo,
+  vehicleRegNo,
+  mobileNo,
+  toatalOrders,
+  status,
+  noGutter,
+}) {
   const [controller] = useMaterialUIController();
   const { darkMode } = controller;
 
@@ -117,12 +125,12 @@ function Bill({ batchId, assignedTo, vehicleRegNo, mobileNo, toatalOrders, statu
 }
 
 // Setting default values for the props of Bill
-Bill.defaultProps = {
+BatchCard.defaultProps = {
   noGutter: false,
 };
 
-// Typechecking props for the Bill
-Bill.propTypes = {
+// Typechecking props for the BatchCard
+BatchCard.propTypes = {
   batchId: PropTypes.string.isRequired,
   assignedTo: PropTypes.string.isRequired,
   vehicleRegNo: PropTypes.string.isRequired,
@@ -131,4 +139,4 @@ Bill.propTypes = {
   status: PropTypes.string.isRequired,
   noGutter: PropTypes.bool,
 };
-export default Bill;
+export default BatchCard;
