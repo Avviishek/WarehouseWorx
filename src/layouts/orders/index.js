@@ -42,15 +42,15 @@ function Orders() {
     const fetchData = (city = "", startDate = null, endDate = null) => {
       setLoading(true);
 
-      let url = "http://localhost:3001/orders";
+      let url = "https://walmartworx-backend.onrender.com/orders";
 
       if (city) {
-        url = `http://localhost:3001/orderaddress?address=${city}`;
+        url = `https://walmartworx-backend.onrender.com/orderaddress?address=${city}`;
       } else if (startDate && endDate) {
-        url = `http://localhost:3001/orderdaterange?startDate=${startDate}&endDate=${endDate}`;
+        url = `https://walmartworx-backend.onrender.com/orderdaterange?startDate=${startDate}&endDate=${endDate}`;
       }
       if (city && startDate && endDate) {
-        url = `http://localhost:3001/orderdateaddress?startDate=${startDate}&endDate=${endDate}&address=${city}`;
+        url = `https://walmartworx-backend.onrender.com/orderdateaddress?startDate=${startDate}&endDate=${endDate}&address=${city}`;
       }
 
       fetch(url)

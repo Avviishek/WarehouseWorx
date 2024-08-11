@@ -48,6 +48,9 @@ import {
 import CloseIcon from "@mui/icons-material/Close";
 import PersonIcon from "@mui/icons-material/Person";
 
+import { ToastContainer, toast, Bounce } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 function Assign() {
   // const { columns, rows } = authorsTableData();
   // const { columns: pColumns, rows: pRows } = projectsTableData();
@@ -61,7 +64,7 @@ function Assign() {
   const [selectedCity, setSelectedCity] = useState("");
 
   useEffect(() => {
-    fetch("http://localhost:3001/address")
+    fetch("https://walmartworx-backend.onrender.com/address")
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -82,10 +85,10 @@ function Assign() {
   useEffect(() => {
     const fetchData = (city = "") => {
       setLoading(true);
-      let url = "http://localhost:3001";
+      let url = "https://walmartworx-backend.onrender.com/";
 
       if (city) {
-        url = `http://localhost:3001/orderaddress?address=${city}`;
+        url = `https://walmartworx-backend.onrender.com/assignedorder?address=${city}`;
       }
 
       fetch(url)
@@ -145,17 +148,25 @@ function Assign() {
 
   useEffect(() => {
     if (open) {
-      // Simulate fetching data from backend
-      // Replace this with actual data fetching logic
-      setTimeout(() => {
-        setData({
-          regNo: "ABC123",
-          driverName: "John Doe",
-          driverMobileNo: "1234567890",
-          dateAssigned: "2024-08-10",
-          volume: "100 m\u00B3",
+      fetch(`https://walmartworx-backend.onrender.com/assigntruck?address=${selectedCity}`)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          setData({
+            regNo: data["vehicle reg no"],
+            driverName: data["driver name"],
+            driverMobileNo: data["mobile no"],
+            dateAssigned: data["date assigned"],
+            volume: data["volume"],
+          });
+        })
+        .catch((error) => {
+          console.error("There was an error!", error);
         });
-      }, 1000);
     }
   }, [open]);
 
@@ -170,6 +181,17 @@ function Assign() {
   const handleOk = () => {
     // Handle form submission or any action
     setOpen(false);
+    toast.success("Orders has been approved", {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      transition: Bounce,
+    });
   };
 
   return (
@@ -276,6 +298,7 @@ function Assign() {
                   position: "relative", // For positioning the icons
                   display: "flex",
                   alignItems: "center",
+                  fontSize: "2.1rem",
                   justifyContent: "space-between",
                   paddingRight: "64px", // Ensure space for the profile icon
                 }}
@@ -288,9 +311,9 @@ function Assign() {
                   aria-label="close"
                   sx={{
                     position: "absolute",
-                    right: 64,
+                    right: 25,
                     top: 8,
-                    color: (theme) => theme.palette.text.primary, // Ensure icon color is visible
+                    color: "red", // Ensure icon color is visible
                   }}
                 >
                   <CloseIcon />
@@ -352,11 +375,11 @@ function Assign() {
                   variant="contained"
                   sx={{
                     backgroundColor: "navyblue",
-                    color: "white",
+                    color: "white !important",
                     maxWidth: "200px", // Set a max width to make the button shorter
                     "&:hover": {
                       backgroundColor: "white",
-                      color: "navyblue",
+                      color: "navyblue !important",
                       border: "1px solid navyblue",
                     },
                   }}
@@ -367,6 +390,7 @@ function Assign() {
             </Dialog>
           </>
         )}
+        <ToastContainer />
       </MDBox>
     </DashboardLayout>
   );

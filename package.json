@@ -20,6 +20,7 @@
     "@mui/icons-material": "5.11.16",
     "@mui/lab": "^5.0.0-alpha.173",
     "@mui/material": "^5.16.7",
+    "@mui/x-data-grid": "^7.12.1",
     "@mui/x-date-pickers": "^7.12.1",
     "chart.js": "4.3.0",
     "chroma-js": "2.4.2",
@@ -32,6 +33,7 @@
     "react-router-dom": "6.11.0",
     "react-scripts": "5.0.1",
     "react-table": "7.8.0",
+    "react-toastify": "^10.0.5",
     "stylis": "4.1.4",
     "stylis-plugin-rtl": "2.1.1",
     "yup": "1.1.1"
