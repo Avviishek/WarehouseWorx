@@ -104,9 +104,54 @@ function DashboardNavbar({ absolute, light, isMini }) {
       onClose={handleCloseMenu}
       sx={{ mt: 2 }}
     >
-      <NotificationItem icon={<Icon>email</Icon>} title="Check new messages" />
-      <NotificationItem icon={<Icon>podcasts</Icon>} title="Manage Podcast sessions" />
-      <NotificationItem icon={<Icon>shopping_cart</Icon>} title="Payment successfully completed" />
+      <NotificationItem
+        icon={<Icon>warning</Icon>}
+        title="Alert: Stock for Item #A1234 (Blue Widgets) is below threshold. Current stock: 10 units. Please reorder urgently."
+      />
+      <NotificationItem
+        icon={<Icon>storage</Icon>}
+        title="Warning: Stock for Item #B5678 (Red Gadgets) exceeds warehouse capacity. Current stock: 500 units. Please manage storage."
+      />
+      <NotificationItem
+        icon={<Icon>schedule</Icon>}
+        title="Notice: 100 units of Item #C9101 (Organic Milk) near expiration on 2024-08-25. Prioritize these for outgoing orders."
+      />
+      <NotificationItem
+        icon={<Icon>event_note</Icon>}
+        title="Reminder: It's time to reorder Item #D2345 (Packing Tape). Only a one-week supply remains."
+      />
+      <NotificationItem
+        icon={<Icon>local_shipping</Icon>}
+        title="New Order: Order #78910 placed by Customer XYZ. Process within the next 3 hours."
+      />
+      <NotificationItem
+        icon={<Icon>playlist_add_check</Icon>}
+        title="Order Picked: Items for Order #78910 have been picked and are ready for packing. Proceed to the packing station."
+      />
+      <NotificationItem
+        icon={<Icon>done</Icon>}
+        title="Order Packed: Order #78910 has been packed and is ready for shipping. Dispatch scheduled for today at 5 PM."
+      />
+      <NotificationItem
+        icon={<Icon>local_shipping</Icon>}
+        title="Order Shipped: Order #78910 has been shipped via Carrier FedEx. Tracking number: 9876543210. Expected delivery: 2024-08-17."
+      />
+      <NotificationItem
+        icon={<Icon>local_shipping</Icon>}
+        title="Incoming Shipment: Shipment #54321 from Supplier ABC arriving at Dock 2 at 9 AM tomorrow. Contents: 400 units of Item #A1234."
+      />
+      <NotificationItem
+        icon={<Icon>build</Icon>}
+        title="Maintenance Notice: The WMS will undergo scheduled maintenance on 2024-08-16 from 2 AM to 4 AM. Please plan accordingly."
+      />
+      <NotificationItem
+        icon={<Icon>thermostat</Icon>}
+        title="Temperature Alert: The cold storage area is running at 6°C, exceeding the safe limit. Immediate action required."
+      />
+      <NotificationItem
+        icon={<Icon>security</Icon>}
+        title="Security Alert: Unauthorized access detected in Warehouse Zone 3 at 2:30 AM. Security personnel have been notified."
+      />
     </Menu>
   );
 
@@ -155,7 +200,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
                   {miniSidenav ? "menu_open" : "menu"}
                 </Icon>
               </IconButton>
-              <IconButton
+              {/*<IconButton
                 size="small"
                 disableRipple
                 color="inherit"
@@ -163,7 +208,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
                 onClick={handleConfiguratorOpen}
               >
                 <Icon sx={iconsStyle}>settings</Icon>
-              </IconButton>
+              </IconButton>*/}
               <IconButton
                 size="small"
                 disableRipple
