@@ -31,6 +31,8 @@ import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import DataTable from "examples/Tables/DataTable";
 import QrReader from "modern-react-qr-reader";
 import dayjs from "dayjs";
+import { ToastContainer, toast, Bounce } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Orders() {
   const [columns, setColumns] = useState([]);
@@ -59,16 +61,16 @@ function Orders() {
   useEffect(() => {
     const fetchData = (city = "", startDate = null, endDate = null) => {
       setLoading(true);
-
-      let url = "https://walmartworx-backend.onrender.com/orders";
+      console.log("fetch data useeffect called");
+      let url = "http://localhost:3001/orders";
 
       if (city) {
-        url = `https://walmartworx-backend.onrender.com/orderaddress?address=${city}`;
+        url = `http://localhost:3001/orderaddress?address=${city}`;
       } else if (startDate && endDate) {
-        url = `https://walmartworx-backend.onrender.com/orderdaterange?startDate=${startDate}&endDate=${endDate}`;
+        url = `http://localhost:3001/orderdaterange?startDate=${startDate}&endDate=${endDate}`;
       }
       if (city && startDate && endDate) {
-        url = `https://walmartworx-backend.onrender.com/orderdateaddress?startDate=${startDate}&endDate=${endDate}&address=${city}`;
+        url = `http://localhost:3001/orderdateaddress?startDate=${startDate}&endDate=${endDate}&address=${city}`;
       }
 
       fetch(url)
@@ -133,8 +135,93 @@ function Orders() {
     setShowComponent(false);
   };
 
-  const handleDataClose = () => {
+  const handleDataClose = async () => {
+    if (webcamResult) {
+      try {
+        const response = await fetch("http://localhost:3001/addorder", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify(webcamResult),
+        });
+        console.log(response);
+
+        if (response.ok) {
+          const contentType = response.headers.get("content-type");
+          if (contentType && contentType.includes("application/json")) {
+            const data = await response.json();
+            console.log("Success sdfsdfs sf s:", data);
+            console.log("toast");
+          } else {
+            const text = await response.text();
+            console.log("Success:", text);
+          }
+
+          await fetchDataAgain();
+        } else {
+          console.error("Error:", response.statusText);
+          // Handle errors here
+        }
+      } catch (error) {
+        console.error("Fetch error:", error);
+        // Handle network errors here
+      }
+    }
+
     setWebcamResult(null);
+  };
+
+  const fetchDataAgain = () => {
+    setLoading(true);
+    console.log("fetchDataAgain Called");
+    fetch("http://localhost:3001/orders")
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        const columnsData = [
+          { Header: "Order ID", accessor: "Order_Id", align: "left" },
+          { Header: "Date", accessor: "Date", align: "center" },
+          { Header: "Category", accessor: "Category", align: "center" },
+          { Header: "Volume(m\u00B3)", accessor: "Volume", align: "center" },
+          { Header: "Address", accessor: "Address", align: "center" },
+          { Header: "PIN", accessor: "PIN", align: "center" },
+        ];
+
+        const rowsData = data.slice(1).map((order) => ({
+          Order_Id: order["COL 1"],
+          Address: order["COL 2"],
+          PIN: order["COL 3"],
+          Date: order["COL 7"],
+          Category: order["COL 5"],
+          Volume: order["COL 6"],
+        }));
+
+        setColumns(columnsData);
+        setRows(rowsData);
+        setLoading(false);
+
+        toast.success("Data has been added Successfully", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+        });
+      })
+      .catch((error) => {
+        setError(error);
+        setLoading(false);
+      });
   };
 
   const webcamError = (error) => {
@@ -143,9 +230,10 @@ function Orders() {
     }
   };
 
-  const webcamScan = (result) => {
+  const webcamScan = async (result) => {
     if (result) {
-      setWebcamResult(JSON.parse(result)); // Parse the JSON result
+      const parsedResult = JSON.parse(result); // Parse the JSON result
+      setWebcamResult(parsedResult);
       setShowComponent(false);
     }
   };
@@ -369,8 +457,13 @@ function Orders() {
                 onClick={handleDataClose}
                 variant="contained"
                 sx={{
-                  backgroundColor: "#338DED", // Darker button background
-                  color: "#fff", // White text color for the button
+                  backgroundColor: "#87CEEB",
+                  color: "white !important",
+                  "&:hover": {
+                    backgroundColor: "white",
+                    color: "#000080 !important", // Navy blue text
+                    border: "1px solid #000080", // Navy blue border
+                  },
                 }}
               >
                 Confirm
@@ -379,6 +472,7 @@ function Orders() {
           </DialogActions>
         </MDBox>
       </Dialog>
+      <ToastContainer />
     </DashboardLayout>
   );
 }

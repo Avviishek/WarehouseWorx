@@ -64,7 +64,7 @@ function Assign() {
   const [selectedCity, setSelectedCity] = useState("");
 
   useEffect(() => {
-    fetch("https://walmartworx-backend.onrender.com/address")
+    fetch("http://localhost:3001/address")
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -85,10 +85,10 @@ function Assign() {
   useEffect(() => {
     const fetchData = (city = "") => {
       setLoading(true);
-      let url = "https://walmartworx-backend.onrender.com/";
+      let url = "http://localhost:3001/";
 
       if (city) {
-        url = `https://walmartworx-backend.onrender.com/assignedorder?address=${city}`;
+        url = `http://localhost:3001/assignedorder?address=${city}`;
       }
 
       fetch(url)
@@ -148,7 +148,7 @@ function Assign() {
 
   useEffect(() => {
     if (open) {
-      fetch(`https://walmartworx-backend.onrender.com/assigntruck?address=${selectedCity}`)
+      fetch(`http://localhost:3001/assigntruck?address=${selectedCity}`)
         .then((response) => {
           if (!response.ok) {
             throw new Error("Network response was not ok");

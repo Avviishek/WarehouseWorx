@@ -37,7 +37,7 @@ function Trucks() {
 
   useEffect(() => {
     // Fetch orders data from the API
-    fetch("https://walmartworx-backend.onrender.com/trucks")
+    fetch("http://localhost:3001/trucks")
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network responses was not ok");
