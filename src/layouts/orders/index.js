@@ -371,6 +371,10 @@ function Orders() {
                 sx={{
                   backgroundColor: "#338DED", // Darker button background
                   color: "#fff", // White text color for the button
+                  "&:hover": {
+                    backgroundColor: "#2a6bbf", // Dark blue on hover
+                    color: "#fff", // White text on hover
+                  },
                 }}
               >
                 Confirm

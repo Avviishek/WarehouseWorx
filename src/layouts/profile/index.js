@@ -21,6 +21,7 @@ import Divider from "@mui/material/Divider";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import InstagramIcon from "@mui/icons-material/Instagram";
+import EmailIcon from "@mui/icons-material/Email";
 
 // WarehouseWorx React components
 import MDBox from "components/MDBox";
@@ -55,7 +56,7 @@ function Overview() {
   return (
     <DashboardLayout>
       <DashboardNavbar />
-      <MDBox mb={2} />
+      <MDBox mb={2} sx={{ maxWidth: "1000px" }} />
       <Header>
         <MDBox mt={5} mb={3}>
           <Grid container spacing={1}>
@@ -71,27 +72,17 @@ function Overview() {
                   email: "avishek_ww@gmail.com",
                   location: "India",
                 }}
-                social={[
+                /*social={[
                   {
-                    link: "https://www.facebook.com/CreativeTim/",
-                    icon: <FacebookIcon />,
+                    link: "https://mail.google.com/",
+                    icon: <EmailIcon />,
                     color: "facebook",
                   },
-                  {
-                    link: "https://twitter.com/creativetim",
-                    icon: <TwitterIcon />,
-                    color: "twitter",
-                  },
-                  {
-                    link: "https://www.instagram.com/creativetimofficial/",
-                    icon: <InstagramIcon />,
-                    color: "instagram",
-                  },
                 ]}
-                action={{ route: "", tooltip: "Edit Profile" }}
+                action={{ route: "", tooltip: "Edit Profile" }}*/
                 shadow={false}
               />
-              <Divider orientation="vertical" sx={{ mx: 0 }} />
+              {/*<Divider orientation="vertical" sx={{ mx: 0 }} />*/}
             </Grid>
             {/*<Grid item xs={12} xl={4}>
               <ProfilesList title="conversations" profiles={profilesListData} shadow={false} />
