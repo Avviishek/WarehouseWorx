@@ -10,7 +10,7 @@ function BatchOrderTable({ batchId }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`http://localhost:3001/orders?batchId=${batchId}`)
+    fetch(`https://walmartworx-backend.onrender.com/orders?batchId=${batchId}`)
       .then((response) => response.json())
       .then((data) => {
         const formattedData = data.map((order) => ({

@@ -62,15 +62,15 @@ function Orders() {
     const fetchData = (city = "", startDate = null, endDate = null) => {
       setLoading(true);
       console.log("fetch data useeffect called");
-      let url = "http://localhost:3001/orders";
+      let url = "https://walmartworx-backend.onrender.com/orders";
 
       if (city) {
-        url = `http://localhost:3001/orderaddress?address=${city}`;
+        url = `https://walmartworx-backend.onrender.com/orderaddress?address=${city}`;
       } else if (startDate && endDate) {
-        url = `http://localhost:3001/orderdaterange?startDate=${startDate}&endDate=${endDate}`;
+        url = `https://walmartworx-backend.onrender.com/orderdaterange?startDate=${startDate}&endDate=${endDate}`;
       }
       if (city && startDate && endDate) {
-        url = `http://localhost:3001/orderdateaddress?startDate=${startDate}&endDate=${endDate}&address=${city}`;
+        url = `https://walmartworx-backend.onrender.com/orderdateaddress?startDate=${startDate}&endDate=${endDate}&address=${city}`;
       }
 
       fetch(url)
@@ -138,7 +138,7 @@ function Orders() {
   const handleDataClose = async () => {
     if (webcamResult) {
       try {
-        const response = await fetch("http://localhost:3001/addorder", {
+        const response = await fetch("https://walmartworx-backend.onrender.com/addorder", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -176,7 +176,7 @@ function Orders() {
   const fetchDataAgain = () => {
     setLoading(true);
     console.log("fetchDataAgain Called");
-    fetch("http://localhost:3001/orders")
+    fetch("https://walmartworx-backend.onrender.com/orders")
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");
