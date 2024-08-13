@@ -1,21 +1,6 @@
-/**
-=========================================================
-* WarehouseWorx  React - v2.2.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
 import { useMemo } from "react";
 
-// porp-types is a library for typechecking of props
+// prop-types is a library for typechecking of props
 import PropTypes from "prop-types";
 
 // react-chartjs-2 components
@@ -36,6 +21,7 @@ import {
 import Card from "@mui/material/Card";
 import Divider from "@mui/material/Divider";
 import Icon from "@mui/material/Icon";
+import DataTable from "examples/Tables/DataTable";
 
 // WarehouseWorx React components
 import MDBox from "components/MDBox";
@@ -56,10 +42,48 @@ ChartJS.register(
 );
 
 function ReportsLineChart({ color, title, description, date, chart }) {
-  const { data, options } = configs(chart.labels || [], chart.datasets || {});
+  const { data, options } = configs(
+    chart.labels || [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ],
+    chart.datasets || {
+      label: "Sales",
+      data: [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1100, 1200],
+    }
+  );
+
+  // Define the columns for the DataTable
+  const columnsData = [
+    { Header: "Month", accessor: "month", align: "center" },
+    { Header: "Sales Predicted", accessor: "sales", align: "center" },
+  ];
+
+  // Debugging: log the structure of the chart object
+  console.log("Chart Labels:", chart.labels);
+  console.log("Chart Data:", chart.datasets.data);
+
+  // Create rows data by mapping labels to corresponding sales data
+  const rowsData = chart.labels.map((label, index) => ({
+    month: label,
+    sales: chart.datasets.data[index],
+  }));
+
+  // Debugging: log the rowsData to ensure it is correctly structured
+  console.log("Rows Data:", rowsData);
 
   return (
-    <Card sx={{ height: "100%" }}>
+    <Card sx={{ height: "100%", boxShadow: "none" }}>
       <MDBox padding="1rem">
         {useMemo(
           () => (
@@ -71,7 +95,7 @@ function ReportsLineChart({ color, title, description, date, chart }) {
               py={2}
               pr={0.5}
               mt={-5}
-              height="12.5rem"
+              height="25rem"
             >
               <Line data={data} options={options} redraw />
             </MDBox>
@@ -84,7 +108,18 @@ function ReportsLineChart({ color, title, description, date, chart }) {
           </MDTypography>
           <MDTypography component="div" variant="button" color="text" fontWeight="light">
             {description}
+
+            <MDBox pt={3}>
+              <DataTable
+                table={{ columns: columnsData, rows: rowsData }} // Corrected prop structure
+                isSorted={false}
+                entriesPerPage={false}
+                showTotalEntries={false}
+                noEndBorder
+              />
+            </MDBox>
           </MDTypography>
+
           <Divider />
           <MDBox display="flex" alignItems="center">
             <MDTypography variant="button" color="text" lineHeight={1} sx={{ mt: 0.15, mr: 0.5 }}>

@@ -106,11 +106,11 @@ function DashboardNavbar({ absolute, light, isMini }) {
     >
       <NotificationItem
         icon={<Icon>warning</Icon>}
-        title="Alert: Stock for Item #A1234 (Blue Widgets) is below threshold. Current stock: 10 units. Please reorder urgently."
+        title="Alert: Stock for Item #A1234 (Blue Widgets) is below threshold. Current Sales: 10 units. Please reorder urgently."
       />
       <NotificationItem
         icon={<Icon>storage</Icon>}
-        title="Warning: Stock for Item #B5678 (Red Gadgets) exceeds warehouse capacity. Current stock: 500 units. Please manage storage."
+        title="Warning: Stock for Item #B5678 (Red Gadgets) exceeds warehouse capacity. Current Sales: 500 units. Please manage storage."
       />
       <NotificationItem
         icon={<Icon>schedule</Icon>}
@@ -176,7 +176,12 @@ function DashboardNavbar({ absolute, light, isMini }) {
     >
       <Toolbar sx={(theme) => navbarContainer(theme)}>
         <MDBox color="inherit" mb={{ xs: 1, md: 0 }} sx={(theme) => navbarRow(theme, { isMini })}>
-          <Breadcrumbs icon="home" title={route[route.length - 1]} route={route} light={light} />
+          <Breadcrumbs
+            icon="home"
+            title={route[route.length - 1].replace(/_/g, " ")}
+            route={route}
+            light={light}
+          />
         </MDBox>
         {isMini ? null : (
           <MDBox sx={(theme) => navbarRow(theme, { isMini })}>

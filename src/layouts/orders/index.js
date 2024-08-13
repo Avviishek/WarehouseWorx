@@ -436,7 +436,7 @@ function Orders() {
                       noEndBorder
                     />
                   ) : (
-                    <MDBox p={3}>
+                    <MDBox pt={3}>
                       <MDTypography variant="h6" align="center">
                         No orders found for the selected filters.
                       </MDTypography>

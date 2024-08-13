@@ -99,19 +99,23 @@ function Projects() {
           <MDTypography variant="h6" gutterBottom>
             Recent Orders
           </MDTypography>
-          <MDBox display="flex" alignItems="center" lineHeight={0}></MDBox>
+          <MDBox display="flex" alignItems="center" lineHeight={0}>
+            <MDTypography variant="button" fontWeight="regular" color="text">
+              &nbsp;<strong>Orders received in recent few days are listed below</strong>
+            </MDTypography>
+          </MDBox>
         </MDBox>
         {renderMenu}
       </MDBox>
       <MDBox pt={3}>
         {loading ? (
-          <MDBox p={3}>
+          <MDBox pt={3}>
             <MDTypography variant="h6" align="center">
               Loading...
             </MDTypography>
           </MDBox>
         ) : error ? (
-          <MDBox p={3}>
+          <MDBox pt={3}>
             <MDTypography variant="h6" align="center" color="error">
               {`Error: ${error.message}`}
             </MDTypography>
