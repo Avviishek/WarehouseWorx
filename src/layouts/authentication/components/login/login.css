@@ -1,13 +1,24 @@
-/* General styles for the login container */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
+
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden; /* Remove scroll bars */
+}
+
 .login-container {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background: url('./warehousebg1.jpg') no-repeat center center; /* Add background image */
+    background: url('./warehousebg1.jpg') no-repeat center center fixed; /* Add background image and make it fixed */
     background-size: cover; /* Ensure the background covers the entire container */
     padding: 20px;
     position: relative;
+    width: 100%; /* Ensure full width */
+    overflow: hidden; /* Prevent scroll bar */
+    font-family: 'Roboto', sans-serif;
 }
 
 .login-container::before {
@@ -18,6 +29,7 @@
     width: 100%;
     height: 100%;
     background-color: rgba(77, 87, 89, 0.6); /* Optional: Add a white overlay with some transparency */
+    z-index: 0; /* Ensure overlay stays behind content */
 }
 
 /* Styling the left info box */
@@ -29,15 +41,18 @@
     text-shadow: 0 2px 3px rgba(0, 0, 0, 0.1); /* Reduced shadow */
     position: relative; /* Ensure it's above the background overlay */
     z-index: 1;
+    font-family: 'Roboto', sans-serif;
 }
 
 .login-title {
+    font-family: 'Roboto', sans-serif;
     font-size: 80px; /* Made the text very large */
     font-weight: bold;
     margin: 0;
 }
 
 .login-tagline {
+    font-family: 'Roboto', sans-serif;
     font-size: 30px;
     margin: 0;
     color: black; /* Changed the color to black */
@@ -51,10 +66,11 @@
     border-radius: 12px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); /* Increased shadow */
     text-align: center;
-    max-width: 400px;
+    max-width: 20rem;
     width: 100%;
     position: relative; /* Ensure it's above the background overlay */
     z-index: 1;
+    font-family: 'Roboto', sans-serif;
 }
 
 /* Styling for the logo inside the header */
@@ -102,6 +118,7 @@
     margin: 10px 0 20px 0;
     font-size: 14px;
     color: #777;
+    font-family: 'Roboto', sans-serif;
 }
 
 /* Styling for the checkbox */
@@ -143,6 +160,55 @@
 }
 
 /* Media queries for responsive design */
+
+/* Targeting tablets in landscape and portrait orientation */
+@media (max-width: 1024px) {
+    .login-container {
+        padding: 10px;
+    }
+
+    .login-info {
+        margin-bottom: 10rem;
+        margin-right: 20px;
+        font-size: 24px; /* Adjust font size for tablet */
+    }
+
+    .login-title {
+        font-size: 48px; /* Adjust title size for tablet */
+    }
+
+    .login-tagline {
+        font-size: 18px; /* Adjust tagline size for tablet */
+    }
+
+    .login-box {
+        padding: 30px;
+        margin-left: 20px; /* Adjust margin for tablet */
+    }
+
+    .login-header .logo {
+        width: 100px;
+        height: 100px;
+    }
+
+    .login-header h2 {
+        font-size: 24px;
+    }
+
+    .login-header p {
+        font-size: 12px;
+    }
+
+    .login-form .input-field {
+        padding: 10px;
+    }
+
+    .sign-in-button {
+        padding: 10px;
+        font-size: 14px;
+    }
+}
+
 @media (max-width: 500px) {
     .login-box {
         padding: 30px;

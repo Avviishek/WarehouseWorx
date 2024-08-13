@@ -10,7 +10,7 @@ const Login = ({ setIsLoggedIn }) => {
   const navigate = useNavigate();
 
   const handleLogin = (e) => {
-    if (email === "admin@gmail.com" && password === "Admin@123") {
+    if (email === "WMGR-2021-AS01" && password === "Admin@123") {
       e.preventDefault();
       setIsLoggedIn(true);
       setEmail("");
@@ -37,7 +37,7 @@ const Login = ({ setIsLoggedIn }) => {
 
         <form className="login-form" onSubmit={handleLogin}>
           <input
-            type="email"
+            type="text"
             placeholder="Warehouse Manager Id"
             className="input-field"
             onChange={(e) => setEmail(e.target.value)}
