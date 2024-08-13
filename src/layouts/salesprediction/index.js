@@ -64,7 +64,7 @@ function Sales_Prediction() {
     async function fetchData() {
       const data = await getChartData(selectedProduct);
       setChartData(data);
-      console.log(data);
+      //console.log(data);
     }
 
     fetchData();

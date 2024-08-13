@@ -15,16 +15,17 @@ Coded by www.creative-tim.com
 import BASE_URL from "Baseurl";
 
 export default async function getChartData(product) {
-  const response = await fetch(`${BASE_URL}/predictedSales?address=delhi`);
+  const response = await fetch(`${BASE_URL}/predictedSales?address=guwahati`);
   const data = await response.json();
+  data.slice(1);
 
   // Filter the data to include only the sales of "Shoes"
   const Data = data.filter((item) => item["COL 2"] === product);
-
+  //console.log(Data);
   // Extract the months and sales values
   const monthOrder = {
     January: 1,
-    Febuary: 2,
+    February: 2,
     March: 3,
     April: 4,
     May: 5,
@@ -42,6 +43,7 @@ export default async function getChartData(product) {
     return monthOrder[a["COL 1"]] - monthOrder[b["COL 1"]];
   });
   const labels = sortedData.map((item) => item["COL 1"]);
+  //console.log(labels);
   const sales = sortedData.map((item) => Math.floor(parseFloat(item["COL 3"])));
 
   // Assuming the API response has the same structure

@@ -70,8 +70,8 @@ function ReportsLineChart({ color, title, description, date, chart }) {
   ];
 
   // Debugging: log the structure of the chart object
-  console.log("Chart Labels:", chart.labels);
-  console.log("Chart Data:", chart.datasets.data);
+  //console.log("Chart Labels:", chart.labels);
+  //console.log("Chart Data:", chart.datasets.data);
 
   // Create rows data by mapping labels to corresponding sales data
   const rowsData = chart.labels.map((label, index) => ({
@@ -80,7 +80,6 @@ function ReportsLineChart({ color, title, description, date, chart }) {
   }));
 
   // Debugging: log the rowsData to ensure it is correctly structured
-  console.log("Rows Data:", rowsData);
 
   return (
     <Card sx={{ height: "100%", boxShadow: "none" }}>
