@@ -33,7 +33,7 @@ function Batch() {
 
   return (
     <DashboardLayout>
-      <DashboardNavbar absolute isMini />
+      <DashboardNavbar />
       <MDBox mt={8}>
         <MDBox mb={3}>
           <Grid container spacing={3}>
