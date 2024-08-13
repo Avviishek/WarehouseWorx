@@ -1,26 +1,35 @@
+/* General styles */
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
 
-html, body {
+* {
     margin: 0;
     padding: 0;
-    height: 100%;
-    /* overflow: hidden; Remove scroll bars */
+    box-sizing: border-box;
 }
 
+/* Container that covers the entire viewport */
 .login-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    background: url('./warehousebg1.jpg') no-repeat center center fixed; /* Add background image and make it fixed */
-    background-size: cover; /* Ensure the background covers the entire container */
+    height: 100vh; /* Full height of the viewport */
+    background: url('./warehousebg1.jpg') no-repeat center center fixed; /* Background image */
+    background-size: cover; /* Cover the entire container */
     padding: 20px;
     position: relative;
-    width: 100%; /* Ensure full width */
-    overflow: hidden; /* Prevent scroll bar */
+    width: 100%; /* Full width */
     font-family: 'Roboto', sans-serif;
+    overflow: hidden; /* Prevent scroll bar */
+    scrollbar-width: none; /* Hide the scroll bar in Firefox */
+    -ms-overflow-style: none; /* Hide the scroll bar in Internet Explorer and Edge */
 }
 
+/* Hide scroll bar for WebKit browsers */
+.login-container::-webkit-scrollbar {
+    display: none; /* Hide the scroll bar in Chrome, Safari, and Opera */
+}
+
+/* Prevent scroll bar in case of content overflow */
 .login-container::before {
     content: "";
     position: absolute;
@@ -44,18 +53,18 @@ html, body {
     font-family: 'Roboto', sans-serif;
 }
 
+/* Title styling */
 .login-title {
-    font-family: 'Roboto', sans-serif;
-    font-size: 80px; /* Made the text very large */
+    font-size: 80px; /* Large text */
     font-weight: bold;
     margin: 0;
 }
 
+/* Tagline styling */
 .login-tagline {
-    font-family: 'Roboto', sans-serif;
     font-size: 30px;
     margin: 0;
-    color: black; /* Changed the color to black */
+    color: black;
 }
 
 /* Styling the login box */
@@ -66,12 +75,11 @@ html, body {
     border-radius: 12px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); /* Increased shadow */
     text-align: center;
-    max-width: 20rem;
+    max-width: 26rem;
     width: 100%;
     position: relative; /* Ensure it's above the background overlay */
     z-index: 1;
-    font-family: 'Roboto', sans-serif;
-    overflow: hidden;
+    overflow: hidden; /* Prevent scroll bar */
 }
 
 /* Styling for the logo inside the header */
@@ -81,7 +89,7 @@ html, body {
     margin-bottom: 20px;
 }
 
-/* Styling for the header text */
+/* Header text styling */
 .login-header h2 {
     margin: 10px 0;
     font-size: 26px;
@@ -111,7 +119,7 @@ html, body {
     border-color: #1DA1F2;
 }
 
-/* Styling for the form options */
+/* Form options styling */
 .form-options {
     display: flex;
     justify-content: space-between;
@@ -119,10 +127,9 @@ html, body {
     margin: 10px 0 20px 0;
     font-size: 14px;
     color: #777;
-    font-family: 'Roboto', sans-serif;
 }
 
-/* Styling for the checkbox */
+/* Checkbox styling */
 .remember-me {
     display: flex;
     align-items: center;
@@ -132,7 +139,7 @@ html, body {
     margin-right: 8px;
 }
 
-/* Styling for the forgot password link */
+/* Forgot password link styling */
 .forgot-password {
     color: #1DA1F2;
     text-decoration: none;
@@ -142,7 +149,7 @@ html, body {
     text-decoration: underline;
 }
 
-/* Styling for the sign-in button */
+/* Sign-in button styling */
 .sign-in-button {
     width: 100%;
     padding: 12px;
@@ -161,8 +168,6 @@ html, body {
 }
 
 /* Media queries for responsive design */
-
-/* Targeting tablets in landscape and portrait orientation */
 @media (max-width: 1024px) {
     .login-container {
         padding: 10px;
