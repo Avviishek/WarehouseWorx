@@ -44,7 +44,7 @@ import Assign from "layouts/assign_orders";
 import Billing from "layouts/billing";
 import Batch from "layouts/batch";
 import RTL from "layouts/rtl";
-import Notifications from "layouts/notifications";
+import Sales_Prediction from "layouts/salesprediction";
 import Profile from "layouts/profile";
 import SignIn from "layouts/authentication/sign-in";
 import SignUp from "layouts/authentication/sign-up";
@@ -53,6 +53,7 @@ import Login from "layouts/authentication/components/login";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
+import TimelineIcon from "@mui/icons-material/Timeline";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn";
@@ -119,11 +120,11 @@ const routes = [
   // },
   {
     type: "collapse",
-    name: "Notifications",
-    key: "notifications",
-    icon: <Icon fontSize="small">notifications</Icon>,
-    route: "/notifications",
-    component: <Notifications />,
+    name: "Sales Prediction",
+    key: "sales_prediction",
+    icon: <TimelineIcon fontSize="small" />,
+    route: "/sales_prediction",
+    component: <Sales_Prediction />,
   },
   {
     type: "collapse",
@@ -145,7 +146,7 @@ const routes = [
     type: "collapse",
     name: "Sign Out",
     key: "sign-out",
-    icon: <Icon fontSize="small">login</Icon>,
+    icon: <Icon fontSize="small">logout</Icon>,
     route: "/authentication/sign-out",
     component: <SignOut />,
   },
