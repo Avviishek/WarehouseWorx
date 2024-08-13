@@ -45,10 +45,13 @@ import ReportsLineChart from "examples/Charts/LineCharts/ReportsLineChart";
 
 // Data
 import getChartData from "layouts/dashboard/data/reportsLineChartData";
+import BASE_URL from "Baseurl";
 
 function Sales_Prediction() {
   const [chartData, setChartData] = useState({ sales: null, tasks: null });
   const [selectedProduct, setSelectedProduct] = useState("");
+  const [cities, setCities] = useState([]);
+  const [selectedCity, setSelectedCity] = useState("");
   const products = [
     "Candles",
     "Chocolates",
@@ -59,19 +62,40 @@ function Sales_Prediction() {
     "T shirt",
     "Television",
   ];
+  useEffect(() => {
+    fetch(`${BASE_URL}/address`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        const allCities = data.slice(1).map((item) => item["COL 2"]);
+        // console.log(allCities);
+
+        setCities(allCities);
+      })
+      .catch((error) => {
+        console.error("There was an error!", error);
+      });
+  }, []);
 
   useEffect(() => {
     async function fetchData() {
-      const data = await getChartData(selectedProduct);
+      const data = await getChartData(selectedProduct, selectedCity);
       setChartData(data);
       //console.log(data);
     }
 
     fetchData();
-  }, [selectedProduct]);
+  }, [selectedProduct, selectedCity]);
 
   const handleProductChange = (event) => {
     setSelectedProduct(event.target.value);
+  };
+  const handleCityChange = (event) => {
+    setSelectedCity(event.target.value);
   };
 
   if (!chartData.sales || !chartData.tasks) return <div>Loading...</div>;
@@ -101,7 +125,24 @@ function Sales_Prediction() {
               </MDBox>
               <MDBox pt={3} px={2}>
                 <Grid container justifyContent="space-between">
-                  <Grid item xs={2}>
+                  <Grid item xs={12} sm={2}>
+                    <FormControl fullWidth variant="outlined" sx={{ height: "2.5rem" }}>
+                      <InputLabel>Select City</InputLabel>
+                      <Select
+                        value={selectedCity}
+                        onChange={handleCityChange}
+                        label="Select City"
+                        sx={{ height: "100px" }}
+                      >
+                        {cities.map((city) => (
+                          <MenuItem key={city} value={city}>
+                            {city}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12} sm={2}>
                     <FormControl fullWidth variant="outlined" sx={{ height: "2.5rem" }}>
                       <InputLabel>Select Product</InputLabel>
                       <Select

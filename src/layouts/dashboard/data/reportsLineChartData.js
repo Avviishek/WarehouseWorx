@@ -14,8 +14,8 @@ Coded by www.creative-tim.com
 */
 import BASE_URL from "Baseurl";
 
-export default async function getChartData(product) {
-  const response = await fetch(`${BASE_URL}/predictedSales?address=guwahati`);
+export default async function getChartData(product, city) {
+  const response = await fetch(`${BASE_URL}/predictedSales?address=${city}`);
   const data = await response.json();
   data.slice(1);
 
