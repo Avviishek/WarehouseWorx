@@ -4,7 +4,7 @@ html, body {
     margin: 0;
     padding: 0;
     height: 100%;
-    overflow: hidden; /* Remove scroll bars */
+    /* overflow: hidden; Remove scroll bars */
 }
 
 .login-container {
@@ -71,6 +71,7 @@ html, body {
     position: relative; /* Ensure it's above the background overlay */
     z-index: 1;
     font-family: 'Roboto', sans-serif;
+    overflow: hidden;
 }
 
 /* Styling for the logo inside the header */
