@@ -189,7 +189,7 @@ function Assign() {
 
   const assignToBatch = async () => {
     try {
-      const response = await fetch("https://walmartworx-backend.onrender.com/addbatch", {
+      const response = await fetch(`${BASE_URL}/addbatch`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

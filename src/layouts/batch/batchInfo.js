@@ -3,14 +3,16 @@ import Card from "@mui/material/Card";
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import BatchCard from "./batchCard";
+import PropTypes from "prop-types";
+import BASE_URL from "Baseurl";
 
-function Batchformation() {
+function Batchformation({ setBatchCity }) {
   const [batches, setBatches] = useState([]);
 
   useEffect(() => {
     const fetchBatches = async () => {
       try {
-        const response = await fetch("https://walmartworx-backend.onrender.com/batch");
+        const response = await fetch(`${BASE_URL}/batch`);
         const data = await response.json();
 
         const rowsData = data.map((batch) => ({
@@ -50,6 +52,8 @@ function Batchformation() {
               mobileNo={batch.mobile_no}
               volume={batch.volume}
               status={batch.status}
+              address={batch.address}
+              setBatchCity={setBatchCity}
             />
           ))}
         </MDBox>
@@ -57,5 +61,9 @@ function Batchformation() {
     </Card>
   );
 }
+
+Batchformation.propTypes = {
+  setBatchCity: PropTypes.func.isRequired,
+};
 
 export default Batchformation;

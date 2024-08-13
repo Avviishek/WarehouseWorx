@@ -28,7 +28,17 @@ import MDButton from "components/MDButton";
 import { useMaterialUIController } from "context";
 import { TextField } from "@mui/material";
 
-function BatchCard({ batchId, assignedTo, vehicleRegNo, mobileNo, volume, status, noGutter }) {
+function BatchCard({
+  batchId,
+  assignedTo,
+  vehicleRegNo,
+  mobileNo,
+  volume,
+  status,
+  noGutter,
+  address,
+  setBatchCity,
+}) {
   const [controller] = useMaterialUIController();
   const { darkMode } = controller;
 
@@ -67,7 +77,11 @@ function BatchCard({ batchId, assignedTo, vehicleRegNo, mobileNo, volume, status
                 <Icon>delete</Icon>&nbsp;delete
               </MDButton>
             </MDBox> */}
-            <MDButton variant="text" color={darkMode ? "white" : "dark"}>
+            <MDButton
+              variant="text"
+              color={darkMode ? "white" : "dark"}
+              onClick={() => setBatchCity(address)}
+            >
               <Icon>visibility</Icon>&nbsp;Show Batch Orders
             </MDButton>
           </MDBox>
@@ -106,6 +120,14 @@ function BatchCard({ batchId, assignedTo, vehicleRegNo, mobileNo, volume, status
         </MDBox>
         <MDBox mb={1} lineHeight={0}>
           <MDTypography variant="caption" color="text">
+            Address&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <MDTypography variant="caption" fontWeight="medium">
+              {address}
+            </MDTypography>
+          </MDTypography>
+        </MDBox>
+        <MDBox mb={1} lineHeight={0}>
+          <MDTypography variant="caption" color="text">
             Status:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <MDTypography variant="caption" fontWeight="medium">
               {status}
@@ -130,6 +152,8 @@ BatchCard.propTypes = {
   mobileNo: PropTypes.string.isRequired,
   volume: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   status: PropTypes.string.isRequired,
+  setBatchCity: PropTypes.func.isRequired,
+  address: PropTypes.string.isRequired,
   noGutter: PropTypes.bool,
 };
 export default BatchCard;
