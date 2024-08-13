@@ -18,32 +18,30 @@ const SignOut = ({ onSignOut }) => {
   };
 
   return (
-    <DashboardNavbar>
-      <Box
-        display="flex"
-        flexDirection="column"
-        justifyContent="center"
-        alignItems="center"
-        minHeight="100vh"
+    <Box
+      display="flex"
+      flexDirection="column"
+      justifyContent="center"
+      alignItems="center"
+      minHeight="100vh"
+    >
+      <Typography variant="h6" gutterBottom sx={{ color: "white" }}>
+        Are you sure to sign out?
+      </Typography>
+      <Button
+        variant="contained"
+        sx={{
+          backgroundColor: alpha("#FF0000", 0.8), // Adjust the opacity for the fade effect
+          color: "white",
+          "&:hover": {
+            backgroundColor: alpha("#FF0000", 0.8), // Full red on hover
+          },
+        }}
+        onClick={handleSignOut}
       >
-        <Typography variant="h6" gutterBottom sx={{ color: "white" }}>
-          Are you sure to sign out?
-        </Typography>
-        <Button
-          variant="contained"
-          sx={{
-            backgroundColor: alpha("#FF0000", 0.8), // Adjust the opacity for the fade effect
-            color: "white",
-            "&:hover": {
-              backgroundColor: alpha("#FF0000", 0.8), // Full red on hover
-            },
-          }}
-          onClick={handleSignOut}
-        >
-          Sign Out
-        </Button>
-      </Box>
-    </DashboardNavbar>
+        Sign Out
+      </Button>
+    </Box>
   );
 };
 
