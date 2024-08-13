@@ -26,7 +26,11 @@ import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Batchformation from "./batchInfo";
 import BatchOrderTable from "./batchOrderTable";
 
+import { useState } from "react";
+
 function Batch() {
+  const [batchcity, setBatchCity] = useState(null);
+
   return (
     <DashboardLayout>
       <DashboardNavbar absolute isMini />
@@ -34,10 +38,10 @@ function Batch() {
         <MDBox mb={3}>
           <Grid container spacing={3}>
             <Grid item xs={12} md={7}>
-              <Batchformation />
+              <Batchformation setBatchCity={setBatchCity} />
             </Grid>
             <Grid item xs={12} md={5}>
-              <BatchOrderTable />
+              <BatchOrderTable batchcity={batchcity} />
             </Grid>
           </Grid>
         </MDBox>

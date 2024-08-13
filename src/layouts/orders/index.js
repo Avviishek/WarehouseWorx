@@ -17,6 +17,7 @@ import {
   InputLabel,
   Select,
   MenuItem,
+  useMediaQuery,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import AddIcon from "@mui/icons-material/Add";
@@ -34,6 +35,10 @@ import dayjs from "dayjs";
 import { ToastContainer, toast, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import BASE_URL from "Baseurl";
+import SearchIcon from "@mui/icons-material/Search";
+import InputAdornment from "@mui/material/InputAdornment";
+import { useMaterialUIController } from "context";
+
 function Orders() {
   const [columns, setColumns] = useState([]);
   const [rows, setRows] = useState([]);
@@ -44,24 +49,34 @@ function Orders() {
   const [endDate, setEndDate] = useState(null);
   const [showComponent, setShowComponent] = useState(false);
   const [webcamResult, setWebcamResult] = useState(null);
+  const [searchQuery, setSearchQuery] = useState(null);
+  const [cities, setCities] = useState([]);
 
-  const cities = [
-    "Bangalore",
-    "Delhi",
-    "Hyderabad",
-    "Silchar",
-    "Pune",
-    "Noida",
-    "Chennai",
-    "Mumbai",
-    "Kolkata",
-    "Guwahati",
-  ];
+  const [controller] = useMaterialUIController();
+  const { darkMode } = controller;
+
+  const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
 
   useEffect(() => {
-    const fetchData = (city = "", startDate = null, endDate = null) => {
+    fetch(`${BASE_URL}/address`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        const allCities = data.map((item) => item["COL 2"]);
+        setCities(allCities);
+      })
+      .catch((error) => {
+        console.error("There was an error!", error);
+      });
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async (city = "", startDate = null, endDate = null) => {
       setLoading(true);
-      console.log("fetch data useeffect called");
       let url = `${BASE_URL}/orders`;
 
       if (city) {
@@ -73,39 +88,38 @@ function Orders() {
         url = `${BASE_URL}/orderdateaddress?startDate=${startDate}&endDate=${endDate}&address=${city}`;
       }
 
-      fetch(url)
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Network response was not ok");
-          }
-          return response.json();
-        })
-        .then((data) => {
-          const columnsData = [
-            { Header: "Order ID", accessor: "Order_Id", align: "left" },
-            { Header: "Date", accessor: "Date", align: "center" },
-            { Header: "Category", accessor: "Category", align: "center" },
-            { Header: "Volume(m\u00B3)", accessor: "Volume", align: "center" },
-            { Header: "Address", accessor: "Address", align: "center" },
-            { Header: "PIN", accessor: "PIN", align: "center" },
-          ];
-          const rowsData = data.slice(1).map((order) => ({
-            Order_Id: order["COL 1"],
-            Address: order["COL 2"],
-            PIN: order["COL 3"],
-            Date: order["COL 7"],
-            Category: order["COL 5"],
-            Volume: order["COL 6"],
-          }));
+      try {
+        const response = await fetch(url);
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const data = await response.json();
 
-          setColumns(columnsData);
-          setRows(rowsData);
-          setLoading(false);
-        })
-        .catch((error) => {
-          setError(error);
-          setLoading(false);
-        });
+        const columnsData = [
+          { Header: "Order ID", accessor: "Order_Id", align: "left" },
+          { Header: "Date", accessor: "Date", align: "center" },
+          { Header: "Category", accessor: "Category", align: "center" },
+          { Header: "Volume(m\u00B3)", accessor: "Volume", align: "center" },
+          { Header: "Address", accessor: "Address", align: "center" },
+          { Header: "PIN", accessor: "PIN", align: "center" },
+        ];
+
+        const rowsData = data.map((order) => ({
+          Order_Id: order["COL 1"],
+          Address: order["COL 2"],
+          PIN: order["COL 3"],
+          Date: order["COL 7"],
+          Category: order["COL 5"],
+          Volume: order["COL 6"],
+        }));
+
+        setColumns(columnsData);
+        setRows(rowsData);
+      } catch (error) {
+        setError(error);
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchData(
@@ -146,14 +160,12 @@ function Orders() {
           credentials: "include",
           body: JSON.stringify(webcamResult),
         });
-        console.log(response);
 
         if (response.ok) {
           const contentType = response.headers.get("content-type");
           if (contentType && contentType.includes("application/json")) {
             const data = await response.json();
-            console.log("Success sdfsdfs sf s:", data);
-            console.log("toast");
+            console.log("Success:", data);
           } else {
             const text = await response.text();
             console.log("Success:", text);
@@ -162,11 +174,9 @@ function Orders() {
           await fetchDataAgain();
         } else {
           console.error("Error:", response.statusText);
-          // Handle errors here
         }
       } catch (error) {
         console.error("Fetch error:", error);
-        // Handle network errors here
       }
     }
 
@@ -175,7 +185,6 @@ function Orders() {
 
   const fetchDataAgain = () => {
     setLoading(true);
-    console.log("fetchDataAgain Called");
     fetch(`${BASE_URL}/orders`)
       .then((response) => {
         if (!response.ok) {
@@ -232,9 +241,47 @@ function Orders() {
 
   const webcamScan = async (result) => {
     if (result) {
-      const parsedResult = JSON.parse(result); // Parse the JSON result
+      const parsedResult = JSON.parse(result);
       setWebcamResult(parsedResult);
       setShowComponent(false);
+    }
+  };
+
+  const fetchOrderById = async (orderId) => {
+    setLoading(true);
+    const url = `${BASE_URL}/searchorders?orderId=${orderId}`;
+
+    try {
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+
+      const columnsData = [
+        { Header: "Order ID", accessor: "Order_Id", align: "left" },
+        { Header: "Date", accessor: "Date", align: "center" },
+        { Header: "Category", accessor: "Category", align: "center" },
+        { Header: "Volume(m\u00B3)", accessor: "Volume", align: "center" },
+        { Header: "Address", accessor: "Address", align: "center" },
+        { Header: "PIN", accessor: "PIN", align: "center" },
+      ];
+
+      const rowsData = data.map((order) => ({
+        Order_Id: order["COL 1"],
+        Address: order["COL 2"],
+        PIN: order["COL 3"],
+        Date: order["COL 7"],
+        Category: order["COL 5"],
+        Volume: order["COL 6"],
+      }));
+
+      setColumns(columnsData);
+      setRows(rowsData);
+    } catch (error) {
+      setError(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -264,13 +311,57 @@ function Orders() {
                   borderRadius="lg"
                   coloredShadow="info"
                 >
-                  <MDTypography variant="h6" color="white">
-                    Orders Table
-                  </MDTypography>
+                  <MDBox
+                    display="flex"
+                    alignItems="center"
+                    justifyContent={isSmallScreen ? "center" : "space-between"}
+                    flexDirection={isSmallScreen ? "column" : "row"}
+                  >
+                    <MDTypography variant="h6" color="white" mb={isSmallScreen ? 2 : 0}>
+                      Orders Table
+                    </MDTypography>
+
+                    <TextField
+                      variant="outlined"
+                      placeholder="Search by Order ID"
+                      size="small"
+                      fullWidth={isSmallScreen}
+                      style={{
+                        width: isSmallScreen ? "100%" : "250px",
+                        backgroundColor: darkMode ? "transparent" : "white", // Transparent background in dark mode
+                        borderRadius: "6px",
+                        marginLeft: isSmallScreen ? 0 : "auto",
+                        borderColor: darkMode ? "rgba(255, 255, 255, 0.7)" : "rgba(0, 0, 0, 0.23)", // Adjust border color
+                      }}
+                      inputProps={{
+                        style: {
+                          color: darkMode ? "white" : "black", // Text color based on dark mode
+                        },
+                      }}
+                      InputLabelProps={{
+                        style: {
+                          color: darkMode ? "rgba(255, 255, 255, 0.7)" : "rgba(0, 0, 0, 0.7)", // Placeholder color in dark mode
+                        },
+                      }}
+                      onChange={(e) =>
+                        setSearchQuery(e.target.value !== "" ? Number(e.target.value) : null)
+                      }
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <IconButton onClick={() => fetchOrderById(searchQuery)}>
+                              <SearchIcon style={{ color: darkMode ? "white" : "black" }} />
+                            </IconButton>
+                          </InputAdornment>
+                        ),
+                      }}
+                    />
+                  </MDBox>
                 </MDBox>
+
                 <MDBox pt={3} px={2}>
                   <Grid container justifyContent="space-between">
-                    <Grid item xs={2}>
+                    <Grid item xs={12} sm={2}>
                       <FormControl fullWidth variant="outlined" sx={{ height: "2.5rem" }}>
                         <InputLabel>Select City</InputLabel>
                         <Select
@@ -288,19 +379,19 @@ function Orders() {
                       </FormControl>
                     </Grid>
 
-                    <Grid item xs="auto">
+                    <Grid item xs={12} sm="auto">
                       <MDButton
                         variant="contained"
                         color="info"
                         onClick={handleUploadOrder}
-                        fullWidth
+                        fullWidth={isSmallScreen}
                         startIcon={<AddIcon />}
                       >
                         Add order
                       </MDButton>
                     </Grid>
 
-                    <Grid item xs={3}>
+                    <Grid item xs={12} sm={3}>
                       <DatePicker
                         label="Start Date"
                         inputFormat="DD/MM/YYYY"
@@ -310,7 +401,7 @@ function Orders() {
                       />
                     </Grid>
 
-                    <Grid item xs={3}>
+                    <Grid item xs={12} sm={3}>
                       <DatePicker
                         label="End Date"
                         inputFormat="DD/MM/YYYY"
@@ -319,7 +410,7 @@ function Orders() {
                         renderInput={(params) => <TextField {...params} fullWidth />}
                       />
                     </Grid>
-                    <Grid item xs="auto">
+                    <Grid item xs={12} sm="auto">
                       <MDButton
                         variant="outlined"
                         color="secondary"
@@ -328,6 +419,7 @@ function Orders() {
                           setStartDate(null);
                           setEndDate(null);
                         }}
+                        fullWidth={isSmallScreen}
                       >
                         Reset Filters
                       </MDButton>
@@ -370,8 +462,8 @@ function Orders() {
             sx={{
               maxWidth: 500,
               width: "100%",
-              boxShadow: "none", // Remove the shadow, effectively removing the border
-              borderRadius: 0, // Remove any rounded corners if needed
+              boxShadow: "none",
+              borderRadius: 0,
               padding: 2,
             }}
           >
@@ -405,8 +497,8 @@ function Orders() {
       >
         <MDBox
           sx={{
-            backgroundColor: "#1A2035", // Dark background color
-            color: "#fff", // White text color
+            backgroundColor: "#1A2035",
+            color: "#fff",
             borderRadius: "6px",
           }}
         >
@@ -415,11 +507,7 @@ function Orders() {
               <MDTypography variant="h6" sx={{ color: "#fff" }}>
                 Order Details
               </MDTypography>
-              <IconButton
-                aria-label="close"
-                onClick={handleDataClose}
-                sx={{ color: "#fff" }} // White color for the close icon
-              >
+              <IconButton aria-label="close" onClick={handleDataClose} sx={{ color: "#fff" }}>
                 <CloseIcon />
               </IconButton>
             </MDBox>
@@ -461,8 +549,8 @@ function Orders() {
                   color: "white !important",
                   "&:hover": {
                     backgroundColor: "white",
-                    color: "#000080 !important", // Navy blue text
-                    border: "1px solid #000080", // Navy blue border
+                    color: "#000080 !important",
+                    border: "1px solid #000080",
                   },
                 }}
               >

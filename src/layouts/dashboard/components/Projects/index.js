@@ -45,7 +45,7 @@ function Projects() {
         ];
 
         // Assuming the first row is headers, skipping it by using slice(1)
-        const rowsData = data.slice(1).map((order) => ({
+        const rowsData = data.map((order) => ({
           Order_Id: order["COL 1"],
           Address: order["COL 2"],
           PIN: order["COL 3"],
