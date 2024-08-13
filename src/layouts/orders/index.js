@@ -34,6 +34,11 @@ import dayjs from "dayjs";
 import { ToastContainer, toast, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import BASE_URL from "Baseurl";
+import SearchIcon from "@mui/icons-material/Search";
+import InputAdornment from "@mui/material/InputAdornment";
+import Input from "@mui/material/Input";
+import { or } from "ajv/dist/compile/codegen";
+
 function Orders() {
   const [columns, setColumns] = useState([]);
   const [rows, setRows] = useState([]);
@@ -44,24 +49,32 @@ function Orders() {
   const [endDate, setEndDate] = useState(null);
   const [showComponent, setShowComponent] = useState(false);
   const [webcamResult, setWebcamResult] = useState(null);
-
-  const cities = [
-    "Bangalore",
-    "Delhi",
-    "Hyderabad",
-    "Silchar",
-    "Pune",
-    "Noida",
-    "Chennai",
-    "Mumbai",
-    "Kolkata",
-    "Guwahati",
-  ];
+  const [searchQuery, setSearchQuery] = useState(null);
+  const [cities, setCities] = useState([]);
 
   useEffect(() => {
-    const fetchData = (city = "", startDate = null, endDate = null) => {
+    fetch(`${BASE_URL}/address`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        const allCities = data.map((item) => item["COL 2"]);
+        // console.log(allCities);
+
+        setCities(allCities);
+      })
+      .catch((error) => {
+        console.error("There was an error!", error);
+      });
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async (city = "", startDate = null, endDate = null) => {
       setLoading(true);
-      console.log("fetch data useeffect called");
+      console.log("fetch data useEffect called");
       let url = `${BASE_URL}/orders`;
 
       if (city) {
@@ -73,39 +86,38 @@ function Orders() {
         url = `${BASE_URL}/orderdateaddress?startDate=${startDate}&endDate=${endDate}&address=${city}`;
       }
 
-      fetch(url)
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Network response was not ok");
-          }
-          return response.json();
-        })
-        .then((data) => {
-          const columnsData = [
-            { Header: "Order ID", accessor: "Order_Id", align: "left" },
-            { Header: "Date", accessor: "Date", align: "center" },
-            { Header: "Category", accessor: "Category", align: "center" },
-            { Header: "Volume(m\u00B3)", accessor: "Volume", align: "center" },
-            { Header: "Address", accessor: "Address", align: "center" },
-            { Header: "PIN", accessor: "PIN", align: "center" },
-          ];
-          const rowsData = data.slice(1).map((order) => ({
-            Order_Id: order["COL 1"],
-            Address: order["COL 2"],
-            PIN: order["COL 3"],
-            Date: order["COL 7"],
-            Category: order["COL 5"],
-            Volume: order["COL 6"],
-          }));
+      try {
+        const response = await fetch(url);
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const data = await response.json();
 
-          setColumns(columnsData);
-          setRows(rowsData);
-          setLoading(false);
-        })
-        .catch((error) => {
-          setError(error);
-          setLoading(false);
-        });
+        const columnsData = [
+          { Header: "Order ID", accessor: "Order_Id", align: "left" },
+          { Header: "Date", accessor: "Date", align: "center" },
+          { Header: "Category", accessor: "Category", align: "center" },
+          { Header: "Volume(m\u00B3)", accessor: "Volume", align: "center" },
+          { Header: "Address", accessor: "Address", align: "center" },
+          { Header: "PIN", accessor: "PIN", align: "center" },
+        ];
+
+        const rowsData = data.map((order) => ({
+          Order_Id: order["COL 1"],
+          Address: order["COL 2"],
+          PIN: order["COL 3"],
+          Date: order["COL 7"],
+          Category: order["COL 5"],
+          Volume: order["COL 6"],
+        }));
+
+        setColumns(columnsData);
+        setRows(rowsData);
+      } catch (error) {
+        setError(error);
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchData(
@@ -232,9 +244,49 @@ function Orders() {
 
   const webcamScan = async (result) => {
     if (result) {
+      console.log(result);
       const parsedResult = JSON.parse(result); // Parse the JSON result
       setWebcamResult(parsedResult);
       setShowComponent(false);
+    }
+  };
+
+  const fetchOrderById = async (orderId) => {
+    setLoading(true);
+    console.log("fetch order by ID called");
+    const url = `${BASE_URL}/searchorders?orderId=${orderId}`;
+
+    try {
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+
+      const columnsData = [
+        { Header: "Order ID", accessor: "Order_Id", align: "left" },
+        { Header: "Date", accessor: "Date", align: "center" },
+        { Header: "Category", accessor: "Category", align: "center" },
+        { Header: "Volume(m\u00B3)", accessor: "Volume", align: "center" },
+        { Header: "Address", accessor: "Address", align: "center" },
+        { Header: "PIN", accessor: "PIN", align: "center" },
+      ];
+
+      const rowsData = data.map((order) => ({
+        Order_Id: order["COL 1"],
+        Address: order["COL 2"],
+        PIN: order["COL 3"],
+        Date: order["COL 7"],
+        Category: order["COL 5"],
+        Volume: order["COL 6"],
+      }));
+
+      setColumns(columnsData);
+      setRows(rowsData);
+    } catch (error) {
+      setError(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -264,10 +316,38 @@ function Orders() {
                   borderRadius="lg"
                   coloredShadow="info"
                 >
-                  <MDTypography variant="h6" color="white">
-                    Orders Table
-                  </MDTypography>
+                  <MDBox display="flex" alignItems="center">
+                    <MDTypography variant="h6" color="white">
+                      Orders Table
+                    </MDTypography>
+
+                    <TextField
+                      variant="outlined"
+                      placeholder="Search by Order ID"
+                      size="small"
+                      style={{
+                        width: "250px", // Increased the width to 250px
+                        backgroundColor: "white",
+                        borderRadius: "6px",
+                        marginLeft: "54rem",
+                      }}
+                      onChange={(e) =>
+                        setSearchQuery(e.target.value !== "" ? Number(e.target.value) : null)
+                      }
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            {console.log(searchQuery)}
+                            <IconButton onClick={() => fetchOrderById(searchQuery)}>
+                              <SearchIcon />
+                            </IconButton>
+                          </InputAdornment>
+                        ),
+                      }}
+                    />
+                  </MDBox>
                 </MDBox>
+
                 <MDBox pt={3} px={2}>
                   <Grid container justifyContent="space-between">
                     <Grid item xs={2}>

@@ -82,6 +82,7 @@ function Assign() {
       });
   }, []);
 
+  // fetch all cities
   useEffect(() => {
     const fetchData = (city = "") => {
       setLoading(true);
@@ -180,18 +181,84 @@ function Assign() {
 
   const handleOk = () => {
     // Handle form submission or any action
+
+    assignToBatch();
+
     setOpen(false);
-    toast.success("Orders has been approved", {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-      transition: Bounce,
-    });
+  };
+
+  const assignToBatch = async () => {
+    try {
+      const response = await fetch("https://walmartworx-backend.onrender.com/addbatch", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          vehicle_reg_no: data.regNo,
+          driver_name: data.driverName,
+          mobile_no: data.driverMobileNo,
+          volume: data.volume,
+          address: selectedCity,
+        }),
+      });
+
+      console.log({
+        vehicle_reg_no: data.regNo,
+        driver_name: data.driverName,
+        mobile_no: data.driverMobileNo,
+        volume: data.volume,
+        address: selectedCity,
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to assign batch");
+      }
+
+      const result = await response.json();
+      console.log("Batch assigned successfully:", result);
+
+      // Optionally show a success toast notification
+
+      toast.success("Orders has been approved", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+
+      toast.success("Batch assigned successfully!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+    } catch (error) {
+      console.error("Error assigning batch:", error);
+
+      // Optionally show an error toast notification
+      toast.error("Error assigning batch!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+    }
   };
 
   return (

@@ -26,16 +26,9 @@ import MDButton from "components/MDButton";
 
 // WarehouseWorx React context
 import { useMaterialUIController } from "context";
+import { TextField } from "@mui/material";
 
-function BatchCard({
-  batchId,
-  assignedTo,
-  vehicleRegNo,
-  mobileNo,
-  toatalOrders,
-  status,
-  noGutter,
-}) {
+function BatchCard({ batchId, assignedTo, vehicleRegNo, mobileNo, volume, status, noGutter }) {
   const [controller] = useMaterialUIController();
   const { darkMode } = controller;
 
@@ -65,17 +58,17 @@ function BatchCard({
           mb={2}
         >
           <MDTypography variant="button" fontWeight="medium" textTransform="capitalize">
-            {batchId}
+            Batch ID : {batchId}
           </MDTypography>
 
           <MDBox display="flex" alignItems="center" mt={{ xs: 2, sm: 0 }} ml={{ xs: -1.5, sm: 0 }}>
-            <MDBox mr={1}>
+            {/* <MDBox mr={1}>
               <MDButton variant="text" color="error">
                 <Icon>delete</Icon>&nbsp;delete
               </MDButton>
-            </MDBox>
+            </MDBox> */}
             <MDButton variant="text" color={darkMode ? "white" : "dark"}>
-              <Icon>edit</Icon>&nbsp;edit
+              <Icon>visibility</Icon>&nbsp;Show Batch Orders
             </MDButton>
           </MDBox>
         </MDBox>
@@ -105,9 +98,9 @@ function BatchCard({
         </MDBox>
         <MDBox mb={1} lineHeight={0}>
           <MDTypography variant="caption" color="text">
-            Total Orders:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            Volume cubic m:&nbsp;&nbsp;&nbsp;
             <MDTypography variant="caption" fontWeight="medium">
-              {toatalOrders}
+              {volume}
             </MDTypography>
           </MDTypography>
         </MDBox>
@@ -135,7 +128,7 @@ BatchCard.propTypes = {
   assignedTo: PropTypes.string.isRequired,
   vehicleRegNo: PropTypes.string.isRequired,
   mobileNo: PropTypes.string.isRequired,
-  toatalOrders: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  volume: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   status: PropTypes.string.isRequired,
   noGutter: PropTypes.bool,
 };

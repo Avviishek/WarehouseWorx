@@ -5,12 +5,13 @@ import MDTypography from "components/MDTypography";
 import { DataGrid } from "@mui/x-data-grid";
 import PropTypes from "prop-types";
 import BASE_URL from "Baseurl";
-function BatchOrderTable({ batchId }) {
+
+function BatchOrderTable({ batchcity }) {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`${BASE_URL}/orders?batchId=${batchId}`)
+    fetch(`${BASE_URL}/batchorder?address=${batchcity}`)
       .then((response) => response.json())
       .then((data) => {
         const formattedData = data.map((order) => ({
@@ -26,7 +27,7 @@ function BatchOrderTable({ batchId }) {
         console.error("Error fetching orders:", error);
         setLoading(false);
       });
-  }, [batchId]);
+  }, [batchcity]);
 
   const columns = [
     { field: "orderId", headerName: "Order ID", width: 150 },
@@ -38,7 +39,7 @@ function BatchOrderTable({ batchId }) {
     <Card sx={{ height: "100%" }}>
       <MDBox display="flex" justifyContent="space-between" alignItems="center" pt={3} px={2}>
         <MDTypography variant="h6" fontWeight="medium" textTransform="capitalize">
-          Batch Id - {batchId}
+          {/* Batch Id - {batchId} */}
         </MDTypography>
       </MDBox>
       <MDBox pt={3} px={2}>
@@ -57,7 +58,7 @@ function BatchOrderTable({ batchId }) {
 }
 
 BatchOrderTable.propTypes = {
-  batchId: PropTypes.string.isRequired,
+  batchcity: PropTypes.string.isRequired,
 };
 
 export default BatchOrderTable;
