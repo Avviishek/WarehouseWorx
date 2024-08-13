@@ -4,13 +4,13 @@ import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import { DataGrid } from "@mui/x-data-grid";
 import PropTypes from "prop-types";
-
+import BASE_URL from "Baseurl";
 function BatchOrderTable({ batchId }) {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`https://walmartworx-backend.onrender.com/orders?batchId=${batchId}`)
+    fetch(`${BASE_URL}/orders?batchId=${batchId}`)
       .then((response) => response.json())
       .then((data) => {
         const formattedData = data.map((order) => ({

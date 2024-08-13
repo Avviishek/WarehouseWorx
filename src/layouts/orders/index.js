@@ -33,7 +33,7 @@ import QrReader from "modern-react-qr-reader";
 import dayjs from "dayjs";
 import { ToastContainer, toast, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import BASE_URL from "Baseurl";
 function Orders() {
   const [columns, setColumns] = useState([]);
   const [rows, setRows] = useState([]);
@@ -62,15 +62,15 @@ function Orders() {
     const fetchData = (city = "", startDate = null, endDate = null) => {
       setLoading(true);
       console.log("fetch data useeffect called");
-      let url = "https://walmartworx-backend.onrender.com/orders";
+      let url = `${BASE_URL}/orders`;
 
       if (city) {
-        url = `https://walmartworx-backend.onrender.com/orderaddress?address=${city}`;
+        url = `${BASE_URL}/orderaddress?address=${city}`;
       } else if (startDate && endDate) {
-        url = `https://walmartworx-backend.onrender.com/orderdaterange?startDate=${startDate}&endDate=${endDate}`;
+        url = `${BASE_URL}/orderdaterange?startDate=${startDate}&endDate=${endDate}`;
       }
       if (city && startDate && endDate) {
-        url = `https://walmartworx-backend.onrender.com/orderdateaddress?startDate=${startDate}&endDate=${endDate}&address=${city}`;
+        url = `${BASE_URL}/orderdateaddress?startDate=${startDate}&endDate=${endDate}&address=${city}`;
       }
 
       fetch(url)
@@ -138,7 +138,7 @@ function Orders() {
   const handleDataClose = async () => {
     if (webcamResult) {
       try {
-        const response = await fetch("https://walmartworx-backend.onrender.com/addorder", {
+        const response = await fetch(`${BASE_URL}/addorder`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -176,7 +176,7 @@ function Orders() {
   const fetchDataAgain = () => {
     setLoading(true);
     console.log("fetchDataAgain Called");
-    fetch("https://walmartworx-backend.onrender.com/orders")
+    fetch(`${BASE_URL}/orders`)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");

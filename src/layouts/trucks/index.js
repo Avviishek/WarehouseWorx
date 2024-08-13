@@ -25,7 +25,7 @@ import MDTypography from "components/MDTypography";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import DataTable from "examples/Tables/DataTable";
-
+import BASE_URL from "Baseurl";
 // Data
 import { useState, useEffect } from "react";
 
@@ -37,7 +37,7 @@ function Trucks() {
 
   useEffect(() => {
     // Fetch orders data from the API
-    fetch("https://walmartworx-backend.onrender.com/trucks")
+    fetch(`${BASE_URL}/trucks`)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network responses was not ok");
@@ -48,7 +48,9 @@ function Trucks() {
         // Define your columns here
         const columnsData = [
           { Header: "Registration Number", accessor: "regitration_no", align: "left" },
-          { Header: "Volumn", accessor: "volumn", align: "center" },
+          { Header: "Volumn(m\u00B3)", accessor: "volumn", align: "center" },
+          { Header: "Driver Contact", accessor: "contact", align: "center" },
+          { Header: "Driver Name", accessor: "driver_name", align: "center" },
           { Header: "Status", accessor: "status", align: "center" },
         ];
 
@@ -56,6 +58,8 @@ function Trucks() {
           regitration_no: trucks["COL 1"],
           volumn: trucks["COL 2"],
           status: trucks["COL 3"] === "1" ? "Available" : "Not Available",
+          contact: trucks["COL 4"],
+          driver_name: trucks["COL 5"],
         }));
 
         setColumns(columnsData);

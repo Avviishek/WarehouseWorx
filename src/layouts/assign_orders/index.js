@@ -30,7 +30,7 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
-
+import BASE_URL from "Baseurl";
 // Data
 import authorsTableData from "layouts/tables/data/authorsTableData";
 import projectsTableData from "layouts/tables/data/projectsTableData";
@@ -64,7 +64,7 @@ function Assign() {
   const [selectedCity, setSelectedCity] = useState("");
 
   useEffect(() => {
-    fetch("https://walmartworx-backend.onrender.com/address")
+    fetch(`${BASE_URL}/address`)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -85,10 +85,10 @@ function Assign() {
   useEffect(() => {
     const fetchData = (city = "") => {
       setLoading(true);
-      let url = "https://walmartworx-backend.onrender.com/";
+      let url = `${BASE_URL}/`;
 
       if (city) {
-        url = `https://walmartworx-backend.onrender.com/assignedorder?address=${city}`;
+        url = `${BASE_URL}/assignedorder?address=${city}`;
       }
 
       fetch(url)
@@ -148,7 +148,7 @@ function Assign() {
 
   useEffect(() => {
     if (open) {
-      fetch(`https://walmartworx-backend.onrender.com/assigntruck?address=${selectedCity}`)
+      fetch(`${BASE_URL}/assigntruck?address=${selectedCity}`)
         .then((response) => {
           if (!response.ok) {
             throw new Error("Network response was not ok");

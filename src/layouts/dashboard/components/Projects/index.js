@@ -12,7 +12,7 @@ import MDTypography from "components/MDTypography";
 
 // WarehouseWorx React examples
 import DataTable from "examples/Tables/DataTable";
-
+import BASE_URL from "Baseurl";
 // Data
 
 function Projects() {
@@ -25,7 +25,7 @@ function Projects() {
   const fetchData = () => {
     setLoading(true);
 
-    const url = "https://walmartworx-backend.onrender.com/recentorders";
+    const url = `${BASE_URL}/recentorders`;
 
     fetch(url)
       .then((response) => {
