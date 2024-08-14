@@ -149,7 +149,11 @@ function Orders() {
     setShowComponent(false);
   };
 
-  const handleDataClose = async () => {
+  const handleDataClose = () => {
+    setWebcamResult(null);
+  };
+
+  const handleConfirmApprove = async () => {
     if (webcamResult) {
       try {
         const response = await fetch(`${BASE_URL}/addorder`, {
@@ -180,7 +184,7 @@ function Orders() {
       }
     }
 
-    setWebcamResult(null);
+    handleDataClose();
   };
 
   const fetchDataAgain = () => {
@@ -542,7 +546,7 @@ function Orders() {
           <DialogActions sx={{ backgroundColor: "#1A2035" }}>
             <MDBox display="flex" justifyContent="flex-end" width="100%" p={2}>
               <MDButton
-                onClick={handleDataClose}
+                onClick={handleConfirmApprove}
                 variant="contained"
                 sx={{
                   backgroundColor: "#87CEEB",
