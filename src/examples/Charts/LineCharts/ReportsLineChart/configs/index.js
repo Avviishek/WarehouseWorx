@@ -24,6 +24,9 @@ function configs(labels, datasets) {
       plugins: {
         legend: {
           display: true, // Enable legend display if you have multiple datasets
+          labels: {
+            color: "#ffffff", // Set legend label color to white
+          },
         },
         tooltip: {
           callbacks: {
@@ -49,7 +52,7 @@ function configs(labels, datasets) {
           },
           ticks: {
             display: true,
-            color: "#f8f9fa",
+            color: "#ffffff", // Set y-axis tick color to white
             padding: 10,
             font: {
               size: 14,
@@ -76,7 +79,7 @@ function configs(labels, datasets) {
           },
           ticks: {
             display: true,
-            color: "#f8f9fa",
+            color: "#ffffff", // Set x-axis tick color to white
             padding: 10,
             font: {
               size: 14,
@@ -86,8 +89,8 @@ function configs(labels, datasets) {
               lineHeight: 2,
             },
             autoSkip: false, // Ensure all labels are displayed
-            maxRotation: 45, // Rotate labels by 45 degrees
-            minRotation: 45, // Minimum rotation of 45 degrees
+            // maxRotation: 45, // Rotate labels by 45 degrees
+            // minRotation: 45, // Minimum rotation of 45 degrees
           },
         },
       },

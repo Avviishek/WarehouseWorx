@@ -97,7 +97,7 @@ function Dashboard() {
               <ComplexStatisticsCard
                 color="primary"
                 icon={<WarehouseIcon />}
-                title="Warehouse Space Available "
+                title="Area Available "
                 count="1240 m²"
                 percentage={{
                   color: "success",

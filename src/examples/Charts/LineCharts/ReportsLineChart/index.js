@@ -43,20 +43,22 @@ ChartJS.register(
 
 function ReportsLineChart({ color, title, description, date, chart }) {
   const { data, options } = configs(
-    chart.labels || [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec",
-    ],
+    (
+      chart.labels || [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
+      ]
+    ).map((label) => label.substring(0, 3)), // Ensure labels are up to 3 characters
     chart.datasets || {
       label: "Sales",
       data: [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1100, 1200],
