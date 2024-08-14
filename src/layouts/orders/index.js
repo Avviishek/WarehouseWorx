@@ -401,7 +401,50 @@ function Orders() {
                         inputFormat="DD/MM/YYYY"
                         value={startDate}
                         onChange={handleStartDateChange}
-                        renderInput={(params) => <TextField {...params} fullWidth />}
+                        renderInput={(params) => (
+                          <TextField
+                            {...params}
+                            fullWidth
+                            sx={{
+                              "& .MuiInputBase-root": {
+                                padding: "8px", // Adjust padding if needed
+                              },
+                              "& .MuiOutlinedInput-notchedOutline": {
+                                borderColor: darkMode
+                                  ? "rgba(255, 255, 255, 0.7)"
+                                  : "rgba(0, 0, 0, 0.23)",
+                              },
+                            }}
+                          />
+                        )}
+                        PopperProps={{
+                          modifiers: [
+                            {
+                              name: "offset",
+                              options: {
+                                offset: [0, 0], // Ensure the popover aligns without any offset
+                              },
+                            },
+                          ],
+                        }}
+                        PaperProps={{
+                          sx: {
+                            paddingLeft: 0, // Remove padding on the left
+                            paddingRight: 0, // Remove padding on the right
+                            "& .MuiPickersCalendarHeader-root": {
+                              paddingLeft: 0, // Remove padding from the calendar header
+                            },
+                            "& .MuiPickersCalendarHeader-labelContainer": {
+                              paddingLeft: 0, // Ensure no padding on the label container
+                            },
+                            "& .MuiDayPicker-header": {
+                              paddingLeft: 0, // Remove padding from the day header
+                            },
+                            "& .MuiDayPicker-weekContainer": {
+                              paddingLeft: 0, // Remove padding from the week container
+                            },
+                          },
+                        }}
                       />
                     </Grid>
 
@@ -411,9 +454,53 @@ function Orders() {
                         inputFormat="DD/MM/YYYY"
                         value={endDate}
                         onChange={handleEndDateChange}
-                        renderInput={(params) => <TextField {...params} fullWidth />}
+                        renderInput={(params) => (
+                          <TextField
+                            {...params}
+                            fullWidth
+                            sx={{
+                              "& .MuiInputBase-root": {
+                                padding: "8px", // Adjust padding if needed
+                              },
+                              "& .MuiOutlinedInput-notchedOutline": {
+                                borderColor: darkMode
+                                  ? "rgba(255, 255, 255, 0.7)"
+                                  : "rgba(0, 0, 0, 0.23)",
+                              },
+                            }}
+                          />
+                        )}
+                        PopperProps={{
+                          modifiers: [
+                            {
+                              name: "offset",
+                              options: {
+                                offset: [0, 0], // Ensure the popover aligns without any offset
+                              },
+                            },
+                          ],
+                        }}
+                        PaperProps={{
+                          sx: {
+                            paddingLeft: 0, // Remove padding on the left
+                            paddingRight: 0, // Remove padding on the right
+                            "& .MuiPickersCalendarHeader-root": {
+                              paddingLeft: 0, // Remove padding from the calendar header
+                            },
+                            "& .MuiPickersCalendarHeader-labelContainer": {
+                              paddingLeft: 0, // Ensure no padding on the label container
+                            },
+                            "& .MuiDayPicker-header": {
+                              paddingLeft: 0, // Remove padding from the day header
+                            },
+                            "& .MuiDayPicker-weekContainer": {
+                              paddingLeft: 0, // Remove padding from the week container
+                            },
+                          },
+                        }}
                       />
                     </Grid>
+
                     <Grid item xs={12} sm="auto">
                       <MDButton
                         variant="outlined"
