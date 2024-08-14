@@ -21,7 +21,7 @@ import {
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import AddIcon from "@mui/icons-material/Add";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+// import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import MDBox from "components/MDBox";
@@ -38,6 +38,10 @@ import BASE_URL from "Baseurl";
 import SearchIcon from "@mui/icons-material/Search";
 import InputAdornment from "@mui/material/InputAdornment";
 import { useMaterialUIController } from "context";
+
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import "./customDatePickerStyles.css";
 
 function Orders() {
   const [columns, setColumns] = useState([]);
@@ -297,6 +301,44 @@ function Orders() {
       </div>
     );
 
+  const customInputStyle = {
+    "& .MuiInputBase-root": {
+      padding: "8px", // Adjust padding if needed
+    },
+    "& .MuiOutlinedInput-notchedOutline": {
+      borderColor: darkMode ? "rgba(255, 255, 255, 0.7)" : "rgba(0, 0, 0, 0.23)",
+    },
+  };
+  const customDatePickerStyles = {
+    calendarContainer: {
+      backgroundColor: "#808080", // Solid gray background for the calendar container
+      color: "white", // White text color
+      borderRadius: "8px", // Rounded corners
+      padding: "8px", // Add padding inside the calendar
+    },
+    header: {
+      backgroundColor: "#808080", // Solid gray background for the header
+      borderBottom: "1px solid #ffffff", // White border for the header
+    },
+    day: {
+      backgroundColor: "#808080", // Solid gray background for each day
+      color: "white", // White text color
+      "&:hover": {
+        backgroundColor: "#696969", // Darker gray on hover
+      },
+    },
+    selectedDay: {
+      backgroundColor: "#696969", // Darker gray for selected day
+      color: "#ffffff", // White text color
+    },
+    monthYearContainer: {
+      backgroundColor: "#808080", // Solid gray background for the month/year container
+    },
+    timeContainer: {
+      backgroundColor: "#808080", // Solid gray background for the time container (if applicable)
+    },
+  };
+
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -394,108 +436,69 @@ function Orders() {
                         Add order
                       </MDButton>
                     </Grid>
-
-                    <Grid item xs={12} sm={3}>
+                    <Grid item xs={12} sm={3} sx={{ height: "auto" }}>
                       <DatePicker
-                        label="Start Date"
-                        inputFormat="DD/MM/YYYY"
-                        value={startDate}
-                        onChange={handleStartDateChange}
-                        renderInput={(params) => (
+                        selected={startDate}
+                        onChange={(date) => setStartDate(date)}
+                        dateFormat="dd/MM/yyyy"
+                        customInput={
                           <TextField
-                            {...params}
                             fullWidth
+                            label="Start Date"
+                            variant="outlined"
                             sx={{
+                              ...customInputStyle,
                               "& .MuiInputBase-root": {
-                                padding: "8px", // Adjust padding if needed
+                                padding: "6px", // Reduced padding to decrease height
                               },
-                              "& .MuiOutlinedInput-notchedOutline": {
-                                borderColor: darkMode
-                                  ? "rgba(255, 255, 255, 0.7)"
-                                  : "rgba(0, 0, 0, 0.23)",
+                              "& .MuiOutlinedInput-root": {
+                                height: "2.7rem", // Decrease the height of the TextField
+                              },
+                              "& .MuiInputLabel-root": {
+                                fontSize: "0.8rem", // Reduce label size to match the smaller height
                               },
                             }}
                           />
-                        )}
-                        PopperProps={{
-                          modifiers: [
-                            {
-                              name: "offset",
-                              options: {
-                                offset: [0, 0], // Ensure the popover aligns without any offset
-                              },
-                            },
-                          ],
-                        }}
-                        PaperProps={{
-                          sx: {
-                            paddingLeft: 0, // Remove padding on the left
-                            paddingRight: 0, // Remove padding on the right
-                            "& .MuiPickersCalendarHeader-root": {
-                              paddingLeft: 0, // Remove padding from the calendar header
-                            },
-                            "& .MuiPickersCalendarHeader-labelContainer": {
-                              paddingLeft: 0, // Ensure no padding on the label container
-                            },
-                            "& .MuiDayPicker-header": {
-                              paddingLeft: 0, // Remove padding from the day header
-                            },
-                            "& .MuiDayPicker-weekContainer": {
-                              paddingLeft: 0, // Remove padding from the week container
-                            },
+                        }
+                        popperPlacement="bottom-start"
+                        popperModifiers={{
+                          offset: {
+                            enabled: true,
+                            offset: "0, 0", // Ensure the popover aligns without any offset
                           },
                         }}
                       />
                     </Grid>
 
-                    <Grid item xs={12} sm={3}>
+                    <Grid item xs={12} sm={3} sx={{ height: "auto" }}>
                       <DatePicker
-                        label="End Date"
-                        inputFormat="DD/MM/YYYY"
-                        value={endDate}
-                        onChange={handleEndDateChange}
-                        renderInput={(params) => (
+                        selected={endDate}
+                        onChange={(date) => setEndDate(date)}
+                        dateFormat="dd/MM/yyyy"
+                        customInput={
                           <TextField
-                            {...params}
                             fullWidth
+                            label="End Date"
+                            variant="outlined"
                             sx={{
+                              ...customInputStyle,
                               "& .MuiInputBase-root": {
-                                padding: "8px", // Adjust padding if needed
+                                padding: "6px", // Reduced padding to decrease height
                               },
-                              "& .MuiOutlinedInput-notchedOutline": {
-                                borderColor: darkMode
-                                  ? "rgba(255, 255, 255, 0.7)"
-                                  : "rgba(0, 0, 0, 0.23)",
+                              "& .MuiOutlinedInput-root": {
+                                height: "2.7rem", // Decrease the height of the TextField
+                              },
+                              "& .MuiInputLabel-root": {
+                                fontSize: "0.8rem", // Reduce label size to match the smaller height
                               },
                             }}
                           />
-                        )}
-                        PopperProps={{
-                          modifiers: [
-                            {
-                              name: "offset",
-                              options: {
-                                offset: [0, 0], // Ensure the popover aligns without any offset
-                              },
-                            },
-                          ],
-                        }}
-                        PaperProps={{
-                          sx: {
-                            paddingLeft: 0, // Remove padding on the left
-                            paddingRight: 0, // Remove padding on the right
-                            "& .MuiPickersCalendarHeader-root": {
-                              paddingLeft: 0, // Remove padding from the calendar header
-                            },
-                            "& .MuiPickersCalendarHeader-labelContainer": {
-                              paddingLeft: 0, // Ensure no padding on the label container
-                            },
-                            "& .MuiDayPicker-header": {
-                              paddingLeft: 0, // Remove padding from the day header
-                            },
-                            "& .MuiDayPicker-weekContainer": {
-                              paddingLeft: 0, // Remove padding from the week container
-                            },
+                        }
+                        popperPlacement="bottom-start"
+                        popperModifiers={{
+                          offset: {
+                            enabled: true,
+                            offset: "0, 0", // Ensure the popover aligns without any offset
                           },
                         }}
                       />
@@ -546,7 +549,7 @@ function Orders() {
           display="flex"
           justifyContent="center"
           alignItems="center"
-          height="80vh"
+          height="70vh" // Decreased vertical height
           width="70vh"
         >
           <Card
