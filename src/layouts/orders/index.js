@@ -482,7 +482,7 @@ function Orders() {
                 onError={webcamError}
                 onScan={webcamScan}
                 style={{ width: "100%" }}
-                facingMode={"environment"}
+                facingMode={{ exact: "environment" }}
               />
               <MDTypography variant="h6" color="textSecondary" sx={{ marginTop: 2 }}>
                 {webcamResult ? `Order Details: ${webcamResult}` : "No QR Code Scanned"}
