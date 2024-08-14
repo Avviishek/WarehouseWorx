@@ -24,6 +24,7 @@
     "@mui/x-date-pickers": "^7.12.1",
     "chart.js": "4.3.0",
     "chroma-js": "2.4.2",
+    "date-fns": "^3.6.0",
     "dayjs": "^1.11.12",
     "modern-react-qr-reader": "^1.0.12",
     "prop-types": "^15.8.1",
@@ -38,7 +39,7 @@
     "react-table": "7.8.0",
     "react-toastify": "^10.0.5",
     "stylis": "4.1.4",
-    "stylis-plugin-rtl": "2.1.1",
+    "stylis-plugin-rtl": "^2.1.1",
     "yup": "1.1.1"
   },
   "scripts": {

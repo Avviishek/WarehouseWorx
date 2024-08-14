@@ -446,6 +446,7 @@ function Orders() {
                             fullWidth
                             label="Start Date"
                             variant="outlined"
+                            InputProps={{ readOnly: true }} // Make the TextField read-only to prevent typing
                             sx={{
                               ...customInputStyle,
                               "& .MuiInputBase-root": {
@@ -461,12 +462,6 @@ function Orders() {
                           />
                         }
                         popperPlacement="bottom-start"
-                        popperModifiers={{
-                          offset: {
-                            enabled: true,
-                            offset: "0, 0", // Ensure the popover aligns without any offset
-                          },
-                        }}
                       />
                     </Grid>
 
@@ -480,6 +475,7 @@ function Orders() {
                             fullWidth
                             label="End Date"
                             variant="outlined"
+                            InputProps={{ readOnly: true }} // Make the TextField read-only to prevent typing
                             sx={{
                               ...customInputStyle,
                               "& .MuiInputBase-root": {
@@ -495,12 +491,6 @@ function Orders() {
                           />
                         }
                         popperPlacement="bottom-start"
-                        popperModifiers={{
-                          offset: {
-                            enabled: true,
-                            offset: "0, 0", // Ensure the popover aligns without any offset
-                          },
-                        }}
                       />
                     </Grid>
 

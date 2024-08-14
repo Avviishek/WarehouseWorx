@@ -1,41 +1,40 @@
 /* Custom styles for react-datepicker to ensure solid background */
 .react-datepicker__header {
-    background-color: #808080 !important; /* Solid gray header */
-    border-bottom: 1px solid #ffffff; /* White border for the header */
-  }
-  
-  .react-datepicker {
-    background-color: #808080 !important; /* Solid gray background for the calendar */
-    border-radius: 8px !important; /* Rounded corners */
-    color: white !important; /* White text color */
-    box-shadow: none !important; /* Remove default shadow if any */
-  }
-  
-  .react-datepicker__day {
-    background-color: #808080 !important; /* Solid gray background for days */
-    color: white !important; /* White text color */
-  }
-  
-  .react-datepicker__day:hover {
-    background-color: #696969 !important; /* Darker gray on hover */
-  }
-  
-  .react-datepicker__day--selected, 
-  .react-datepicker__day--keyboard-selected {
-    background-color: #696969 !important; /* Darker gray for selected day */
-    color: white !important; /* White text color */
-  }
-  
-  .react-datepicker__current-month, 
-  .react-datepicker__day-name {
-    color: white !important; /* White text for month and day names */
-  }
-  
-  .react-datepicker__month-container {
-    background-color: #808080 !important; /* Solid gray background for the month container */
-  }
-  
-  .react-datepicker__triangle {
-    display: none !important; /* Hide the triangle to ensure a solid background */
-  }
-  
+  background-color: #808080 !important; /* Solid gray header */
+  border-bottom: 1px solid #ffffff; /* White border for the header */
+}
+
+.react-datepicker {
+  background-color: #808080 !important; /* Solid gray background for the calendar */
+  border-radius: 8px !important; /* Rounded corners */
+  color: white !important; /* White text color */
+  box-shadow: none !important; /* Remove default shadow if any */
+}
+
+.react-datepicker__day {
+  background-color: #808080 !important; /* Solid gray background for days */
+  color: white !important; /* White text color */
+}
+
+.react-datepicker__day:hover {
+  background-color: #696969 !important; /* Darker gray on hover */
+}
+
+.react-datepicker__day--selected, 
+.react-datepicker__day--keyboard-selected {
+  background-color: #696969 !important; /* Darker gray for selected day */
+  color: white !important; /* White text color */
+}
+
+.react-datepicker__current-month, 
+.react-datepicker__day-name {
+  color: white !important; /* White text for month and day names */
+}
+
+.react-datepicker__month-container {
+  background-color: #808080 !important; /* Solid gray background for the month container */
+}
+
+.react-datepicker__triangle {
+  display: none !important; /* Hide the triangle to ensure a solid background */
+}
